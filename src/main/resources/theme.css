@@ -1,0 +1,32 @@
+.root {
+    /* Base color for the light blue theme */
+    -light-blue-theme-color: #E1F5FE;
+    -dark-text-color: #263238;
+    -border-color: #B0BEC5;
+}
+
+/* Common Styles for both buttons and labels */
+.base-style {
+    font-family: 'Arial', sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Styling for labels */
+.label.base-style {
+    -fx-text-fill: -dark-text-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+}
+
+/* Styling for buttons - only shape */
+.button.base-style {
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-border-color: -border-color;
+    -fx-text-fill: -dark-text-color;
+}
+
+.button.base-style:hover {
+    -fx-background-color: #ECEFF1;
+}

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="482.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teacherslink.controller">
+   <children>
+      <MenuBar prefHeight="28.0" prefWidth="650.0" AnchorPane.bottomAnchor="456.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <SplitPane fx:id="splitPane1" dividerPositions="0.33" layoutX="51.0" layoutY="151.0" prefHeight="483.5" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="searchField" layoutX="9.0" layoutY="1.0" prefHeight="27.0" prefWidth="127.0" promptText="Enter Instructor ID">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding></TextField>
+                  <Button fx:id="searchButton" layoutX="146.0" layoutY="1.0" mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" />
+                  <ListView fx:id="listview" editable="true" layoutX="5.0" layoutY="37.0" prefHeight="371.0" prefWidth="200.0" />
+                  <Button fx:id="chooseFileButton" layoutX="5.0" layoutY="415.0" mnemonicParsing="false" onAction="#onChooseFileButtonClick" prefHeight="26.0" prefWidth="200.0" text="Choose file">
+                     <font>
+                        <Font name="Arial Bold Italic" size="13.0" />
+                     </font></Button>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane fx:id="splitPane2" dividerPositions="0.583610188261351" layoutX="66.0" layoutY="117.0" orientation="VERTICAL" prefHeight="453.5" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="430.0">
+                           <children>
+                              <ImageView fitHeight="95.0" fitWidth="97.0" layoutX="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../demo.jpeg" />
+                                 </image>
+                              </ImageView>
+                              <GridPane fx:id="homeCampusLabel1" layoutX="14.0" layoutY="111.0" prefHeight="150.0" prefWidth="403.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="107.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="10.0" prefWidth="296.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="ID:">
+                                       <font>
+                                          <Font name="Arial Bold Italic" size="13.0" />
+                                       </font></Label>
+                                    <Label text="Name:" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font></Label>
+                                    <Label text="Rank:" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font></Label>
+                                    <Label text="Home Campus:" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font></Label>
+                                    <Label fx:id="idLabel" GridPane.columnIndex="1" />
+                                    <Label fx:id="nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="rankLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="homeCampusLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Courses:" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font></Label>
+                                    <Label fx:id="coursesLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                 </children>
+                              </GridPane>
+                              <GridPane layoutX="131.0" layoutY="10.0" prefHeight="95.0" prefWidth="285.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="80.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Online Certified:">
+                                       <font>
+                                          <Font name="Arial Bold Italic" size="13.0" />
+                                       </font></Label>
+                                    <Label text="Preferred Campuses:" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="Arial Bold Italic" size="13.0" />
+                                       </font></Label>
+                                    <Label text="Second/Third Courses:" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="Arial Bold Italic" size="13.0" />
+                                       </font></Label>
+                                    <Label fx:id="onlineCertLabel" GridPane.columnIndex="1" />
+                                    <Label fx:id="preferredCampusLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="secondThirdCourseLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="216.0" prefWidth="430.0">
+                           <children>
+                              <HBox layoutX="2.0" layoutY="-2.0" prefHeight="211.0" prefWidth="423.0" AnchorPane.bottomAnchor="158.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <children>
+                                    <VBox prefHeight="350.0" prefWidth="100.0" spacing="2.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="MONDAY">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="monday7amButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="7-8AM" />
+                                          <Button fx:id="mondayAmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="AM" />
+                                          <Button fx:id="mondayPmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="PM" />
+                                          <Button fx:id="monday3pmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="3-4PM" />
+                                          <Button fx:id="mondayLateAfternoonButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Afternoon" />
+                                          <Button fx:id="mondayEveningButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Evening" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="350.0" prefWidth="100.0" spacing="2.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="TUESDAY">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="tuesday7amButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="7-8AM" />
+                                          <Button fx:id="tuesdayAmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="AM" />
+                                          <Button fx:id="tuesdayPmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="PM" />
+                                          <Button fx:id="tuesday3pmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="3-4PM" />
+                                          <Button fx:id="tuesdayLateAfternoonButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Afternoon" />
+                                          <Button fx:id="tuesdayEveningButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Evening" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="345.0" prefWidth="115.0" spacing="2.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="WEDNESDAY">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="wednesday7amButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="7-8AM" />
+                                          <Button fx:id="wednesdayAmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="AM" />
+                                          <Button fx:id="wednesdayPmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="PM" />
+                                          <Button fx:id="wednesday3pmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="3-4PM" />
+                                          <Button fx:id="wednesdayLateAfternoonButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Afternoon" />
+                                          <Button fx:id="wednesdayEveningButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Evening" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="333.0" prefWidth="100.0" spacing="2.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="THURSDAY">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="thursday7amButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="7-8AM" />
+                                          <Button fx:id="thursdayAmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="AM" />
+                                          <Button fx:id="thursdayPmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="PM" />
+                                          <Button fx:id="thursday3pmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="3-4PM" />
+                                          <Button fx:id="thursdayLateAfternoonButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Afternoon" />
+                                          <Button fx:id="thursdayEveningButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Evening" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="354.0" prefWidth="100.0" spacing="2.0">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                       <children>
+                                          <Label text="FRIDAY">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="friday7amButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="7-8AM" />
+                                          <Button fx:id="fridayAmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="AM" />
+                                          <Button fx:id="fridayPmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="PM" />
+                                          <Button fx:id="friday3pmButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="3-4PM" />
+                                          <Button fx:id="fridayLateAfternoonButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Afternoon" />
+                                          <Button fx:id="fridayEveningButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Evening" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="11.0" layoutY="206.0" prefHeight="39.0" prefWidth="404.0" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="206.0">
+                                 <children>
+                                    <Button fx:id="saturdayButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="SATURDAY">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold Italic" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="sundayButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="SUNDAY">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children></AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
