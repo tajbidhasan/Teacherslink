@@ -44,7 +44,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextField fx:id="searchField" layoutX="9.0" layoutY="1.0" prefHeight="27.0" prefWidth="127.0" promptText="Enter Instructor ID" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="1.0">
+                  <TextField fx:id="searchField" layoutX="9.0" layoutY="1.0" prefHeight="27.0" prefWidth="127.0" promptText="Enter Instructor ID" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="1.0">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding></TextField>
