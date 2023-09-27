@@ -164,10 +164,19 @@ public class controller {
     protected void onChooseFileButtonClick() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+
+        // Set default file path
+        File defaultFile = new File("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
+        if (defaultFile.exists()) {
+            fileChooser.setInitialDirectory(defaultFile.getParentFile()); // set the parent directory of the file
+            fileChooser.setInitialFileName(defaultFile.getName()); // set the default filename
+        }
+
         File selectedFile = fileChooser.showOpenDialog(chooseFileButton.getScene().getWindow());
         if (selectedFile != null) {
             try {
                 ExcelProcessor.processExcelFile(selectedFile.getPath());
+               // System.out.println(selectedFile.getPath());
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Excel file processed successfully!");
                 List<Instructor> allInstructors = db.getAllInstructors(); // Assuming this method returns a List of Instructor objects
                 instructors.clear();
@@ -184,8 +193,8 @@ public class controller {
             Alert alert = new Alert(Alert.AlertType.WARNING, "No file selected!");
             alert.showAndWait();
         }
-
     }
+
     private void displayInstructorDetailsByID(String idNo) {
         Instructor instructor = db.getInstructor(idNo);
         if (instructor != null) {
@@ -257,6 +266,8 @@ public class controller {
 
 
     public void initialize() {
+        //load the excle file auto
+        processDefaultExcelFile();
         // Set the initial position of the divider for splitPane1 to 0.33 (33%)
         splitPane1.setDividerPositions(0.36);
 
@@ -298,6 +309,28 @@ public class controller {
         coursesLabel.setText("");
         secondThirdCourseLabel.setText("");
 
+    }
+    private void processDefaultExcelFile() {
+        File defaultFile = new File("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
+        if (defaultFile.exists()) {
+            try {
+                ExcelProcessor.processExcelFile(defaultFile.getPath());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Default Excel file processed successfully!");
+                List<Instructor> allInstructors = db.getAllInstructors(); // Assuming this method returns a List of Instructor objects
+                instructors.clear();
+                instructors.addAll(allInstructors);
+                listview.setItems(instructors);
+
+                alert.showAndWait();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error processing default Excel file!");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Default file not found!");
+            alert.showAndWait();
+        }
     }
 
 
