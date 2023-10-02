@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +21,13 @@ public class HomeController {
 
     @FXML
     private TextField getPassCode;
+    @FXML
+    private ImageView backgroundImage;
+
+    public void initialize() {
+        backgroundImage.fitWidthProperty().bind(((AnchorPane) backgroundImage.getParent()).widthProperty());
+        backgroundImage.fitHeightProperty().bind(((AnchorPane) backgroundImage.getParent()).heightProperty());
+    }
 
     @FXML
     private void handleGetInstructorsClick() {
