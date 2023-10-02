@@ -21,7 +21,7 @@
          </Label>
          <HBox spacing="10.0">
             <children>
-               <Button fx:id="getCourses" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="215.0" text="COURSES" textFill="#e01451">
+               <Button fx:id="getCourses" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGetCoursesClick" prefHeight="75.0" prefWidth="215.0" text="COURSES" textFill="#e01451">
                   <padding>
                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </padding>

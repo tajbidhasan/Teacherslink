@@ -41,6 +41,29 @@ public class HomeController {
             e.printStackTrace();
             // Handle the error (e.g., show an error dialog)
         }
+
+    }
+    @FXML
+    private void handleGetCoursesClick() {
+        try {
+            // Load the new scene from courseView.fxml
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("courseView.fxml"));
+            Scene courseViewScene = new Scene(courseViewRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) getCourses.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(courseViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
     }
 
 
