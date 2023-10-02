@@ -1,8 +1,7 @@
 package com.example.teacherslink;
 
 
-
-
+import java.time.LocalTime;
 
 public class Course {
 
@@ -13,8 +12,8 @@ public class Course {
     private String campus;        // campus the course is offered at
     private String instructionMethod;  // instruction method
     private String days;          // days offered in the week
-    private String beginTime;     // time that class begins
-    private String endTime;       // time that class ends
+    private LocalTime beginTime;  // time that class begins
+    private LocalTime endTime;    // time that class ends
 
 
     // Constructor
@@ -79,19 +78,19 @@ public class Course {
         this.days = days;
     }
 
-    public String getBeginTime() {
+    public LocalTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(String beginTime) {
+    public void setBeginTime(LocalTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

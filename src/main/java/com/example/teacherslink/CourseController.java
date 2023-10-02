@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.TreeMap;
 
 public class CourseController {
@@ -73,15 +74,18 @@ public class CourseController {
     }
 
     private void displayCourseDetails(Course course) {
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("h:mma");
+
         setCourseName.setText(course.getCourse());
         setCourseTitle.setText(course.getCourseTitle());
         setCrn.setText(String.valueOf(course.getCrn()));
         setPOT.setText(course.getPartOfTerm());
         setCampus.setText(course.getCampus());
         setDays.setText(course.getDays());
-        setBeginTime.setText(course.getBeginTime());
-        setEndTime.setText(course.getEndTime());
+        setBeginTime.setText(course.getBeginTime().format(outputFormatter));  // Format to 12-hour time with AM/PM
+        setEndTime.setText(course.getEndTime().format(outputFormatter));      // Format to 12-hour time with AM/PM
     }
+
 
     private void populateListView() {
         ObservableList<Course> courseList = FXCollections.observableArrayList(CourseDataSet.getInstance().getCourses().values());
