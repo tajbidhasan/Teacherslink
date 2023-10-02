@@ -6,11 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.TreeMap;
 
 public class CourseController {
@@ -97,6 +102,29 @@ public class CourseController {
             }
         }
         listView.setItems(filteredList);
+    }
+    @FXML
+    private void handleHomeClick() {
+        try {
+            CourseReader.readCoursesFromCSV();
+            // Load the new scene from courseView.fxml
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
+            Scene courseViewScene = new Scene(courseViewRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) homeButton.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(courseViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
     }
 }
 

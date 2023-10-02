@@ -4,8 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -150,6 +154,8 @@ public class controller {
 
     @FXML
     private Button saturdayButton;
+    @FXML
+    private Button homeButton;
 
     @FXML
     private ListView<Instructor> listview;
@@ -158,7 +164,29 @@ public class controller {
     private ObservableList<Instructor> instructors = FXCollections.observableArrayList();
 
 
+    @FXML
+    private void handleHomeClick() {
+        try {
+            CourseReader.readCoursesFromCSV();
+            // Load the new scene from courseView.fxml
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
+            Scene courseViewScene = new Scene(courseViewRoot);
 
+            // Get the current stage
+            Stage currentStage = (Stage) homeButton.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(courseViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
+    }
 
     @FXML
     protected void onChooseFileButtonClick() {
@@ -321,7 +349,7 @@ public class controller {
                 instructors.addAll(allInstructors);
                 listview.setItems(instructors);
 
-                alert.showAndWait();
+
             } catch (IOException ioException) {
                 ioException.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error processing default Excel file!");
@@ -331,6 +359,7 @@ public class controller {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Default file not found!");
             alert.showAndWait();
         }
+
     }
 
 

@@ -14,7 +14,7 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
 
         // Set the scene and show the stage
-        Scene scene = new Scene(root,650,600);
+        Scene scene = new Scene(root,800,700);
         scene.getStylesheets().add(getClass().getResource("/theme.css").toExternalForm());
 
         primaryStage.setTitle("TeachersLink");

@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class CourseReader {
 
-    private static final String CSV_FILE_PATH = "/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/CourseInformation.csv";
+    private static final String CSV_FILE_PATH = "/CourseInformation.csv";
 
     public static void readCoursesFromCSV() {
         readCoursesFromCSV(CSV_FILE_PATH);

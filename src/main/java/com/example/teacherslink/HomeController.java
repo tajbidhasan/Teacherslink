@@ -46,6 +46,7 @@ public class HomeController {
     @FXML
     private void handleGetCoursesClick() {
         try {
+            CourseReader.readCoursesFromCSV();
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("courseView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);
