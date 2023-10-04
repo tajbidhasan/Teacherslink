@@ -1,6 +1,9 @@
 package com.example.teacherslink;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Instructor {
     String ID_no;
@@ -11,7 +14,7 @@ public class Instructor {
     String City_state_zip;
     String Home_phone;
     String college_date;
-    String course;
+    List<String> courses = new ArrayList<>();  // changed from String to ArrayList<String>
     String rank;
     Boolean Online;
     String campus;
@@ -25,6 +28,9 @@ public class Instructor {
     String late_afternoon_classes;
     String evening_classes;
     String fall_workload;
+    private TimeRange availableFrom;
+    private TimeRange availableTo;
+    private List<Course> assignedCourses = new ArrayList<>();
     private boolean[][] mon_friday = new boolean[5][6];
     private boolean saturday;
     private boolean sunday;
@@ -109,22 +115,23 @@ public class Instructor {
         Home_phone = home_phone;
     }
 
-    public String getCollege_date() {
-        return college_date;
-    }
+
 
     public void setCollege_date(String college_date) {
         this.college_date = college_date;
     }
-
-    public String getCourse() {
-        return course;
+    public List<String> getCourses() {
+        return courses;
     }
-
-    public void setCourse(String course) {
-        this.course = course;
+    public String getCoursesAsString() {
+        return String.join(", ", courses); // Assumes courses is the ArrayList<String> field in the Instructor class
     }
-
+    public void setCourse(String coursesString) {
+        String[] coursesArray = coursesString.split(" ");
+        for(String course : coursesArray) {
+            this.courses.add(course.trim());
+        }
+    }
     public String getRank() {
         return rank;
     }
@@ -173,41 +180,30 @@ public class Instructor {
         this.sevenToEight_am_classes = sevenToEight_am_classes;
     }
 
-    public String getAM_classes() {
-        return AM_classes;
-    }
+
 
     public void setAM_classes(String AM_classes) {
         this.AM_classes = AM_classes;
     }
 
-    public String getThreeToFour_pm_classes() {
-        return threeToFour_pm_classes;
-    }
 
     public void setThreeToFour_pm_classes(String threeToFour_pm_classes) {
         this.threeToFour_pm_classes = threeToFour_pm_classes;
     }
 
-    public String getPM_classes() {
-        return PM_classes;
-    }
+
 
     public void setPM_classes(String PM_classes) {
         this.PM_classes = PM_classes;
     }
 
-    public String getLate_afternoon_classes() {
-        return late_afternoon_classes;
-    }
+
 
     public void setLate_afternoon_classes(String late_afternoon_classes) {
         this.late_afternoon_classes = late_afternoon_classes;
     }
 
-    public String getEvening_classes() {
-        return evening_classes;
-    }
+
 
     public void setEvening_classes(String evening_classes) {
         this.evening_classes = evening_classes;
@@ -221,38 +217,10 @@ public class Instructor {
         this.fall_workload = fall_workload;
     }
 
-/*
-    @Override
-    public String toString() {
-        return "Instructor{" +
-                "ID_no='" + ID_no + '\'' +
-                ", Home_campus='" + Home_campus + '\'' +
-                ", Business_number='" + Business_number + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", City_state_zip='" + City_state_zip + '\'' +
-                ", Home_phone='" + Home_phone + '\'' +
-                ", college_date='" + college_date + '\'' +
-                ", course='" + course + '\'' +
-                ", rank='" + rank + '\'' +
-                ", Online='" + Online + '\'' +
-                ", campus='" + campus + '\'' +
-                ", Second_course='" + Second_course + '\'' +
-                ", Third_course='" + Third_course + '\'' +
-                ", sevenToEight_am_classes='" + sevenToEight_am_classes + '\'' +
-                ", AM_classes='" + AM_classes + '\'' +
-                ", threeToFour_pm_classes='" + threeToFour_pm_classes + '\'' +
-                ", PM_classes='" + PM_classes + '\'' +
-                ", late_afternoon_classes='" + late_afternoon_classes + '\'' +
-                ", evening_classes='" + evening_classes + '\'' +
-                ", fall_workload='" + fall_workload + '\'' +
-                ", mon_friday=" + array2DToString(mon_friday) + // Changed this line
-                ", saturday=" + saturday +
-                ", sunday=" + sunday +
-                '}';
-    }
-*/
 
+    public boolean courseExists(String courseToCheck) {
+        return courses.contains(courseToCheck);
+    }
 
     private String array2DToString(boolean[][] array) {
         StringBuilder sb = new StringBuilder("[");
@@ -265,9 +233,73 @@ public class Instructor {
         sb.append("]");
         return sb.toString();
     }
+    public boolean isAvailableDuring(LocalTime startTime, LocalTime endTime) {
+        int startIndex = startTime.getHour();
+        int endIndex = endTime.getHour();
+
+        for (int i = 0; i < 5; i++) { // Check for Mon-Fri
+            boolean isAvailable = true;
+            for (int j = startIndex; j < endIndex; j++) {
+                if (!mon_friday[i][j]) { // Not available in this hour on this day
+                    isAvailable = false;
+                    break;
+                }
+            }
+            if (isAvailable) {
+                return true;
+            }
+        }
+
+
+        // Assuming that if an instructor is available on Saturday or Sunday,
+        // they are available for the whole day.
+        if ((saturday && startIndex >= 0 && endIndex <= 24) ||
+                (sunday && startIndex >= 0 && endIndex <= 24)) {
+            return true;
+        }
+
+        return false; // Not available during this time range on any day
+    }
+
+    public TimeRange getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(TimeRange availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public TimeRange getAvailableTo() {
+        return availableTo;
+    }
+
+    public void setAvailableTo(TimeRange availableTo) {
+        this.availableTo = availableTo;
+    }
+
+    public boolean isAvailableDuring(TimeRange courseTime) {
+        return courseTime.getStart().isAfter(availableFrom.getStart()) && courseTime.getEnd().isBefore(availableTo.getEnd());
+    }
+
+    // New methods to handle course assignments
+    public boolean canTeachAnotherCourse() {
+        return assignedCourses.size() < 5; // 5 is the maximum number of courses an instructor can teach
+    }
+
+    public void assignCourse(Course course) {
+        if (canTeachAnotherCourse()) {
+            assignedCourses.add(course);
+        } else {
+            System.out.println("Instructor " + name + " has reached the maximum number of courses they can teach.");
+        }
+    }
+
+    public List<Course> getAssignedCourses() {
+        return assignedCourses;
+    }
     @Override
     public String toString() {
-        return name + " ID: [" + ID_no + "]";
+        return name + " ID: [" + ID_no + "]" ;
     }
 
 

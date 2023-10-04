@@ -21,6 +21,32 @@ public class HomeController {
     private TextField getPassCode;
 
 
+    @FXML
+    private Button scheduleBuilder;
+    @FXML
+    private void handleScheduleBuilderClick() {
+        try {
+            CourseReader.readCoursesFromCSV();
+            // Load the new scene from ScheduleBuilderView.fxml
+            Parent scheduleBuilderViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/ScheduleBuilderView.fxml"));
+
+            Scene scheduleBuilderViewScene = new Scene(scheduleBuilderViewRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) scheduleBuilder.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(scheduleBuilderViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
+    }
 
 
     @FXML

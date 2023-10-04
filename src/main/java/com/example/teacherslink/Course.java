@@ -10,7 +10,7 @@ public class Course {
     private int crn;              // a unique number for each section
     private String partOfTerm;    // Part of Term
     private String campus;        // campus the course is offered at
-    private String instructionMethod;  // instruction method
+    private Instructor instructor;
     private String days;          // days offered in the week
     private LocalTime beginTime;  // time that class begins
     private LocalTime endTime;    // time that class ends
@@ -21,7 +21,26 @@ public class Course {
         this.crn = crn;
         this.course = course;
     }
+    /**
+     * Checks if the given time range overlaps with the course's time.
+     *
+     * @param otherBeginTime - start time of the time range to check
+     * @param otherEndTime - end time of the time range to check
+     * @return true if there's an overlap, false otherwise
+     */
+    public boolean doesTimeOverlap(LocalTime otherBeginTime, LocalTime otherEndTime) {
+        return !(otherEndTime.isBefore(this.beginTime) || otherBeginTime.isAfter(this.endTime));
+    }
 
+    /**
+     * Checks if the given time range overlaps with the course's time.
+     *
+     * @param otherTimeRange - the time range to check
+     * @return true if there's an overlap, false otherwise
+     */
+    public boolean doesTimeOverlap(TimeRange otherTimeRange) {
+        return doesTimeOverlap(otherTimeRange.getStart(), otherTimeRange.getEnd());
+    }
     public String getCourse() {
         return course;
     }
@@ -40,6 +59,14 @@ public class Course {
 
     public int getCrn() {
         return crn;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     public void setCrn(int crn) {
@@ -62,13 +89,7 @@ public class Course {
         this.campus = campus;
     }
 
-    public String getInstructionMethod() {
-        return instructionMethod;
-    }
 
-    public void setInstructionMethod(String instructionMethod) {
-        this.instructionMethod = instructionMethod;
-    }
 
     public String getDays() {
         return days;

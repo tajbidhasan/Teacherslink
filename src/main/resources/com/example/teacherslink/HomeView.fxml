@@ -21,12 +21,13 @@
          </Label>
          <HBox alignment="CENTER" spacing="10.0">
             <children>
-               <Button fx:id="getCourses" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGetCoursesClick" prefHeight="75.0" prefWidth="215.0" text="COURSES" textFill="#e01451">
+               <Button fx:id="getCourses" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGetCoursesClick" prefHeight="75.0" prefWidth="87.0" text="COURSES" textFill="#e01451">
                   <padding>
                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </padding>
                </Button>
-               <Button fx:id="getInstructors" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGetInstructorsClick" prefHeight="76.0" prefWidth="215.0" text="INSTRUCTORES" textFill="#1549c2">
+               <Button fx:id="scheduleBuilder" mnemonicParsing="false" onAction="#handleScheduleBuilderClick" prefHeight="72.0" prefWidth="123.0" text="ScheduleBuilder" />
+               <Button fx:id="getInstructors" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGetInstructorsClick" prefHeight="76.0" prefWidth="121.0" text="INSTRUCTORES" textFill="#1549c2">
                   <padding>
                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </padding>

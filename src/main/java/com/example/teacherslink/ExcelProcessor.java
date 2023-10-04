@@ -12,109 +12,117 @@ public class ExcelProcessor {
     static InstructorDatabase db = InstructorDatabase.getInstance();
 
     public static void processExcelFile(String filePath) throws IOException {
-        // Load the Excel file
-        //XSSFWorkbook workbook = new XSSFWorkbook(filePath);
-        //XSSFSheet sheet = workbook.getSheetAt(0);
         try (XSSFWorkbook workbook = new XSSFWorkbook(filePath)) {
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             for (int rowIndex = 0; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+
                 Row currentRow = sheet.getRow(rowIndex);
+                if (currentRow == null) {
+                    continue;  // Skip the current iteration
+                }
                 Cell idCell = currentRow.getCell(0);
 
-                // Check if the current cell contains a valid ID
-                if (idCell != null && isValidId(idCell.getStringCellValue())) {
+                String idCellValue = getCellValue(idCell);
+
+                if (idCell != null && isValidId(idCellValue)) {
                     Instructor instructor = new Instructor();
 
-                    instructor.setID_no(idCell.getStringCellValue());
-                    instructor.setHome_campus(sheet.getRow(rowIndex + 1).getCell(0).getStringCellValue());
-                    instructor.setBusiness_number(sheet.getRow(rowIndex + 2).getCell(0).getStringCellValue());
+                    instructor.setID_no(idCellValue);
+                    instructor.setHome_campus(getCellValue(sheet.getRow(rowIndex + 1).getCell(0)));
+                    instructor.setBusiness_number(getCellValue(sheet.getRow(rowIndex + 2).getCell(0)));
 
-                    instructor.setName(currentRow.getCell(1).getStringCellValue());
-                    instructor.setAddress(sheet.getRow(rowIndex + 1).getCell(1).getStringCellValue());
-                    instructor.setCity_state_zip(sheet.getRow(rowIndex + 2).getCell(1).getStringCellValue());
+                    instructor.setName(getCellValue(currentRow.getCell(1)));
+                    instructor.setAddress(getCellValue(sheet.getRow(rowIndex + 1).getCell(1)));
+                    instructor.setCity_state_zip(getCellValue(sheet.getRow(rowIndex + 2).getCell(1)));
 
-                    instructor.setHome_phone(currentRow.getCell(2).getStringCellValue());
-                    instructor.setCollege_date(sheet.getRow(rowIndex + 1).getCell(2).getStringCellValue());
-                    instructor.setCourse(sheet.getRow(rowIndex + 2).getCell(2).getStringCellValue());
+                    instructor.setHome_phone(getCellValue(currentRow.getCell(2)));
+                    instructor.setCollege_date(getCellValue(sheet.getRow(rowIndex + 1).getCell(2)));
+                    instructor.setCourse(getCellValue(sheet.getRow(rowIndex + 2).getCell(2)));
 
-                    instructor.setRank(currentRow.getCell(3).getStringCellValue());
+                    instructor.setRank(getCellValue(currentRow.getCell(3)));
 
-                    if ("Y".equalsIgnoreCase(currentRow.getCell(4).getStringCellValue())) {
+                    if ("Y".equalsIgnoreCase(getCellValue(currentRow.getCell(4)))) {
                         instructor.setOnline(true);
                     } else {
                         instructor.setOnline(false);
                     }
 
-                    //changing 11/09/23
-                    instructor.setCampus(currentRow.getCell(5).getStringCellValue());
+                    instructor.setCampus(getCellValue(currentRow.getCell(5)));
 
-
-                    // Check the value of cell 6 in the currentRow
-                    if ("Y".equalsIgnoreCase(currentRow.getCell(6).getStringCellValue())) {
+                    if ("Y".equalsIgnoreCase(getCellValue(currentRow.getCell(6)))) {
                         instructor.setSecond_course(true);
                     } else {
                         instructor.setSecond_course(false);
                     }
 
-// Check the value of cell 6 in the next row
-                    if ("Y".equalsIgnoreCase(sheet.getRow(rowIndex + 1).getCell(6).getStringCellValue())) {
+                    if ("Y".equalsIgnoreCase(getCellValue(sheet.getRow(rowIndex + 1).getCell(6)))) {
                         instructor.setThird_course(true);
                     } else {
                         instructor.setThird_course(false);
                     }
 
-
-                    String sevenToEightAMAvailability = currentRow.getCell(8).getStringCellValue();
+                    String sevenToEightAMAvailability = getCellValue(currentRow.getCell(8));
                     instructor.setSevenToEight_am_classes(sevenToEightAMAvailability);
                     setAvailability(instructor, sevenToEightAMAvailability, 0);
 
-                    String amAvailability = sheet.getRow(rowIndex + 1).getCell(8).getStringCellValue();
+                    String amAvailability = getCellValue(sheet.getRow(rowIndex + 1).getCell(8));
                     instructor.setAM_classes(amAvailability);
                     setAvailability(instructor, amAvailability, 1);
 
-                    String threeToFourPMAvailability = currentRow.getCell(9).getStringCellValue();
+                    String threeToFourPMAvailability = getCellValue(currentRow.getCell(9));
                     instructor.setThreeToFour_pm_classes(threeToFourPMAvailability);
                     setAvailability(instructor, threeToFourPMAvailability, 2);
 
-
-                    String pmAvailability = sheet.getRow(rowIndex + 1).getCell(9).getStringCellValue();
+                    String pmAvailability = getCellValue(sheet.getRow(rowIndex + 1).getCell(9));
                     instructor.setPM_classes(pmAvailability);
                     setAvailability(instructor, pmAvailability, 3);
 
-
-                    if ("sat".equalsIgnoreCase(currentRow.getCell(10).getStringCellValue())) {
+                    if ("sat".equalsIgnoreCase(getCellValue(currentRow.getCell(10)))) {
                         instructor.setSaturday(true);
                     }
-                    if ("sun".equalsIgnoreCase(sheet.getRow(rowIndex + 1).getCell(10).getStringCellValue())) {
+                    if ("sun".equalsIgnoreCase(getCellValue(sheet.getRow(rowIndex + 1).getCell(10)))) {
                         instructor.setSunday(true);
                     }
 
-                    String lateAfternoonAvailability = currentRow.getCell(11).getStringCellValue();
+                    String lateAfternoonAvailability = getCellValue(currentRow.getCell(11));
                     instructor.setLate_afternoon_classes(lateAfternoonAvailability);
                     setAvailability(instructor, lateAfternoonAvailability, 4);
 
-                    String eveningAvailability = currentRow.getCell(12).getStringCellValue();
+                    String eveningAvailability = getCellValue(currentRow.getCell(12));
                     instructor.setEvening_classes(eveningAvailability);
                     setAvailability(instructor, eveningAvailability, 5);
 
-                    instructor.setFall_workload(currentRow.getCell(14).getStringCellValue());
+                    instructor.setFall_workload(getCellValue(currentRow.getCell(14)));
                     db.addOrUpdateInstructor(instructor);
-
 
                     rowIndex += 2;  // Since we've processed this instructor, skip the next two rows
                 }
-                // If it's not a valid ID cell, the loop will just go to the next row in the next iteration.
             }
 
-
-            // Print the number of instructors in the database
             System.out.println(db.getInstructorCount());
-
-            // Print all instructors
             db.printAllInstructors();
         }
     }
+    private static String getCellValue(Cell cell) {
+        if (cell == null) {
+            return "";  // or return null, based on your preference
+        }
+
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                return String.valueOf(cell.getNumericCellValue());
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            default:
+                return "";
+        }
+    }
+
+
+
     private static void setAvailability(Instructor instructor, String availability, int column) {
         // Remove any leading asterisks or spaces
         availability = availability.replaceAll("^[*\\s]+", "");
@@ -126,28 +134,22 @@ public class ExcelProcessor {
                     instructor.getMon_friday()[0][column] = true;
                     break;
                 case 'T':
-                    // If the current 'T' is preceded by 'W'
-                    if (i - 1 >= 0 && availability.charAt(i - 1) == 'W') {
-                        instructor.getMon_friday()[1][column] = true;  // Tuesday
-                    }
-                    // If the current 'T' is the last character, or if it's followed by any character other than a space or another 'T'
-                    else if (i == availability.length() - 1 || (i + 1 < availability.length() && availability.charAt(i + 1) != ' ' && availability.charAt(i + 1) != 'T')) {
+                    instructor.getMon_friday()[1][column] = true;  // Tuesday
+                    // Check for 'T T' pattern for Thursday
+                    if (i + 2 < availability.length() && availability.charAt(i + 2) == 'T') {
                         instructor.getMon_friday()[3][column] = true;  // Thursday
-                    }
-                    // Otherwise, treat it as Tuesday
-                    else {
-                        instructor.getMon_friday()[1][column] = true;  // Tuesday
                     }
                     break;
                 case 'W':
-                    instructor.getMon_friday()[2][column] = true;
+                    instructor.getMon_friday()[2][column] = true;  // Wednesday
                     break;
                 case 'F':
-                    instructor.getMon_friday()[4][column] = true;
+                    instructor.getMon_friday()[4][column] = true;  // Friday
                     break;
             }
         }
     }
+
 
 
     private static boolean isValidId(String value) {

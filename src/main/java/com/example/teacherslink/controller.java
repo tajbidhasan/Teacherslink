@@ -229,7 +229,7 @@ public class controller {
             homeCampusLabel.setText(instructor.getHome_campus());
             preferredCampusLabel.setText(instructor.getCampus());
             onlineCertLabel.setText(String.valueOf(instructor.getOnline()));
-            coursesLabel.setText(instructor.getCourse());
+            coursesLabel.setText(instructor.getCoursesAsString());
             secondThirdCourseLabel.setText(instructor.getSecond_course() + "/" + instructor.getThird_course());
 
             // Set button colors based on availability
