@@ -13,10 +13,10 @@ public class Instructor {
     String college_date;
     String course;
     String rank;
-    String Online;
+    Boolean Online;
     String campus;
-    String Second_course;
-    String Third_course;
+    Boolean Second_course;
+    Boolean Third_course;
     String sevenToEight_am_classes;
     String AM_classes;
     String threeToFour_pm_classes;
@@ -133,11 +133,11 @@ public class Instructor {
         this.rank = rank;
     }
 
-    public String getOnline() {
+    public Boolean getOnline() {
         return Online;
     }
 
-    public void setOnline(String online) {
+    public void setOnline(Boolean online) {
         Online = online;
     }
 
@@ -149,19 +149,19 @@ public class Instructor {
         this.campus = campus;
     }
 
-    public String getSecond_course() {
+    public Boolean getSecond_course() {
         return Second_course;
     }
 
-    public void setSecond_course(String second_course) {
+    public void setSecond_course(Boolean second_course) {
         Second_course = second_course;
     }
 
-    public String getThird_course() {
+    public Boolean getThird_course() {
         return Third_course;
     }
 
-    public void setThird_course(String third_course) {
+    public void setThird_course(Boolean third_course) {
         Third_course = third_course;
     }
 

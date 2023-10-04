@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,7 +27,9 @@ public class HomeController {
     private void handleGetInstructorsClick() {
         try {
             // Load the new scene from instructorView.fxml
-            Parent instructorViewRoot = FXMLLoader.load(getClass().getResource("InstructorView.fxml"));
+            Parent instructorViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/InstructorView.fxml"));
+
+
             Scene instructorViewScene = new Scene(instructorViewRoot);
 
             // Get the current stage
@@ -53,7 +53,7 @@ public class HomeController {
         try {
             CourseReader.readCoursesFromCSV();
             // Load the new scene from courseView.fxml
-            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("courseView.fxml"));
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/courseView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);
 
             // Get the current stage

@@ -2,7 +2,6 @@ package com.example.teacherslink;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,8 +13,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import static com.example.teacherslink.ExcelProcessor.db;
 
 public class controller {
 
@@ -231,7 +228,7 @@ public class controller {
             rankLabel.setText(instructor.getRank());
             homeCampusLabel.setText(instructor.getHome_campus());
             preferredCampusLabel.setText(instructor.getCampus());
-            onlineCertLabel.setText(instructor.getOnline());
+            onlineCertLabel.setText(String.valueOf(instructor.getOnline()));
             coursesLabel.setText(instructor.getCourse());
             secondThirdCourseLabel.setText(instructor.getSecond_course() + "/" + instructor.getThird_course());
 

@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.TreeMap;
 
 public class CourseController {
 
