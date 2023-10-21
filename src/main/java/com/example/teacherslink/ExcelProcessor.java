@@ -40,7 +40,17 @@ public class ExcelProcessor {
                     instructor.setCollege_date(getCellValue(sheet.getRow(rowIndex + 1).getCell(2)));
                     instructor.setCourse(getCellValue(sheet.getRow(rowIndex + 2).getCell(2)));
 
-                    instructor.setRank(getCellValue(currentRow.getCell(3)));
+                    String cellValue = getCellValue(currentRow.getCell(3));
+
+                    if ("A1".equals(cellValue)) {
+                        instructor.setRank(Ranks.PROF);
+                    } else if ("A2".equals(cellValue)) {
+                        instructor.setRank(Ranks.ASSOCIATE_PROF);
+                    } else if ("A3".equals(cellValue)) {
+                        instructor.setRank(Ranks.ASSISTANT_PROF);
+                    } else if ("A4".equals(cellValue)) {
+                        instructor.setRank(Ranks.LECTURER);
+                    }
 
                     if ("Y".equalsIgnoreCase(getCellValue(currentRow.getCell(4)))) {
                         instructor.setOnline(true);
@@ -63,19 +73,19 @@ public class ExcelProcessor {
                     }
 
                     String sevenToEightAMAvailability = getCellValue(currentRow.getCell(8));
-                    instructor.setSevenToEight_am_classes(sevenToEightAMAvailability);
+
                     setAvailability(instructor, sevenToEightAMAvailability, 0);
 
                     String amAvailability = getCellValue(sheet.getRow(rowIndex + 1).getCell(8));
-                    instructor.setAM_classes(amAvailability);
+
                     setAvailability(instructor, amAvailability, 1);
 
                     String threeToFourPMAvailability = getCellValue(currentRow.getCell(9));
-                    instructor.setThreeToFour_pm_classes(threeToFourPMAvailability);
+
                     setAvailability(instructor, threeToFourPMAvailability, 2);
 
                     String pmAvailability = getCellValue(sheet.getRow(rowIndex + 1).getCell(9));
-                    instructor.setPM_classes(pmAvailability);
+
                     setAvailability(instructor, pmAvailability, 3);
 
                     if ("sat".equalsIgnoreCase(getCellValue(currentRow.getCell(10)))) {
@@ -86,11 +96,11 @@ public class ExcelProcessor {
                     }
 
                     String lateAfternoonAvailability = getCellValue(currentRow.getCell(11));
-                    instructor.setLate_afternoon_classes(lateAfternoonAvailability);
+
                     setAvailability(instructor, lateAfternoonAvailability, 4);
 
                     String eveningAvailability = getCellValue(currentRow.getCell(12));
-                    instructor.setEvening_classes(eveningAvailability);
+
                     setAvailability(instructor, eveningAvailability, 5);
 
                     instructor.setFall_workload(getCellValue(currentRow.getCell(14)));

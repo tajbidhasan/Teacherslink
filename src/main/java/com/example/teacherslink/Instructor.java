@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Instructor {
+    private Ranks rank;
     String ID_no;
     String Home_campus;
     String Business_number;
@@ -15,18 +16,15 @@ public class Instructor {
     String Home_phone;
     String college_date;
     List<String> courses = new ArrayList<>();  // changed from String to ArrayList<String>
-    String rank;
+   // String rank;
     Boolean Online;
     String campus;
     Boolean Second_course;
     Boolean Third_course;
-    String sevenToEight_am_classes;
-    String AM_classes;
-    String threeToFour_pm_classes;
-    String PM_classes;
 
-    String late_afternoon_classes;
-    String evening_classes;
+
+
+
     String fall_workload;
     private TimeRange availableFrom;
     private TimeRange availableTo;
@@ -116,6 +114,9 @@ public class Instructor {
     }
 
 
+    public void setRank(Ranks rank) {
+        this.rank = rank;
+    }
 
     public void setCollege_date(String college_date) {
         this.college_date = college_date;
@@ -132,13 +133,11 @@ public class Instructor {
             this.courses.add(course.trim());
         }
     }
-    public String getRank() {
+    public Ranks getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
+
 
     public Boolean getOnline() {
         return Online;
@@ -172,42 +171,13 @@ public class Instructor {
         Third_course = third_course;
     }
 
-    public String getSevenToEight_am_classes() {
-        return sevenToEight_am_classes;
-    }
-
-    public void setSevenToEight_am_classes(String sevenToEight_am_classes) {
-        this.sevenToEight_am_classes = sevenToEight_am_classes;
-    }
 
 
 
-    public void setAM_classes(String AM_classes) {
-        this.AM_classes = AM_classes;
-    }
-
-
-    public void setThreeToFour_pm_classes(String threeToFour_pm_classes) {
-        this.threeToFour_pm_classes = threeToFour_pm_classes;
-    }
 
 
 
-    public void setPM_classes(String PM_classes) {
-        this.PM_classes = PM_classes;
-    }
 
-
-
-    public void setLate_afternoon_classes(String late_afternoon_classes) {
-        this.late_afternoon_classes = late_afternoon_classes;
-    }
-
-
-
-    public void setEvening_classes(String evening_classes) {
-        this.evening_classes = evening_classes;
-    }
 
     public String getFall_workload() {
         return fall_workload;
@@ -234,6 +204,19 @@ public class Instructor {
         return sb.toString();
     }
     public boolean isAvailableDuring(LocalTime startTime, LocalTime endTime) {
+        if (this.availableFrom == null || this.availableTo == null) {
+            return false; // Not available if times are not set.
+        }
+
+        TimeRange courseTimeRange = new TimeRange(startTime, endTime);
+
+        // Check if the instructor's availability overlaps with the course time range
+        boolean isTimeOverlap = courseTimeRange.isOverlapping(new TimeRange(this.availableFrom.getStart(), this.availableTo.getEnd()));
+
+        // If the time doesn’t overlap, then it’s not necessary to check the days availability
+        if (!isTimeOverlap) return false;
+
+        // Check the instructor’s availability based on the days and times.
         int startIndex = startTime.getHour();
         int endIndex = endTime.getHour();
 
@@ -250,9 +233,7 @@ public class Instructor {
             }
         }
 
-
-        // Assuming that if an instructor is available on Saturday or Sunday,
-        // they are available for the whole day.
+        // Check availability for the weekend days
         if ((saturday && startIndex >= 0 && endIndex <= 24) ||
                 (sunday && startIndex >= 0 && endIndex <= 24)) {
             return true;
@@ -260,29 +241,62 @@ public class Instructor {
 
         return false; // Not available during this time range on any day
     }
+    public boolean isAvailableToTeach(Course course) {
+        if("ONLINE".equals(course.getDays()) && Online){
+            return true;
+        }
+        // Convert the course's start and end times to a TimeRange.
+        TimeRange courseTimeRange = new TimeRange(course.getBeginTime(), course.getEndTime());
 
-    public TimeRange getAvailableFrom() {
-        return availableFrom;
+        // Determine which period this TimeRange falls under.
+        Period coursePeriod = null;
+        for (Period period : Period.values()) {
+            if (period.getTimeRange().isOverlapping(courseTimeRange)) {
+                coursePeriod = period;
+                break;
+            }
+        }
+
+        if (coursePeriod == null) {
+            return false; // The course's time doesn't match any known period.
+        }
+        String days = course.getDays(); // Example: "MTR"
+        for (char dayChar : days.toCharArray()) {
+            int dayIndex;
+            switch (dayChar) {
+                case 'M':
+                    dayIndex = 0;
+                    break;
+                case 'T':
+                    dayIndex = 1;
+                    break;
+                case 'W':
+                    dayIndex = 2;
+                    break;
+                case 'R':
+                    dayIndex = 3;
+                    break;
+                case 'F':
+                    dayIndex = 4;
+                    break;
+                default:
+                    return false; // Unknown day character.
+            }
+
+            int periodIndex = coursePeriod.ordinal();
+            if (!mon_friday[dayIndex][periodIndex]) {
+                return false; // The instructor is not available during this day and period.
+            }
+        }
+
+        return true; // The instructor is available for all days and the period of the course.
     }
 
-    public void setAvailableFrom(TimeRange availableFrom) {
-        this.availableFrom = availableFrom;
-    }
 
-    public TimeRange getAvailableTo() {
-        return availableTo;
-    }
-
-    public void setAvailableTo(TimeRange availableTo) {
-        this.availableTo = availableTo;
-    }
-
-    public boolean isAvailableDuring(TimeRange courseTime) {
-        return courseTime.getStart().isAfter(availableFrom.getStart()) && courseTime.getEnd().isBefore(availableTo.getEnd());
-    }
 
     // New methods to handle course assignments
     public boolean canTeachAnotherCourse() {
+
         return assignedCourses.size() < 5; // 5 is the maximum number of courses an instructor can teach
     }
 
@@ -299,7 +313,7 @@ public class Instructor {
     }
     @Override
     public String toString() {
-        return name + " ID: [" + ID_no + "]" ;
+        return name;
     }
 
 

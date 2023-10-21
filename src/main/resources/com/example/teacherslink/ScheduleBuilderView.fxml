@@ -21,7 +21,7 @@
                   <ListView fx:id="UnassignedCourseList" layoutX="18.0" layoutY="79.0" prefHeight="269.0" prefWidth="167.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="79.0" />
                   <TextField fx:id="searchField" layoutX="18.0" layoutY="14.0" prefHeight="26.0" prefWidth="167.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="14.0" />
                   <Button fx:id="searchButton" layoutX="18.0" layoutY="46.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="167.0" text="Search" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="46.0" />
-                  <Button fx:id="goHome" layoutX="18.0" layoutY="357.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="167.0" text="HOME" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
+                  <Button fx:id="homeButton" layoutX="18.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleHomeClick" prefHeight="17.0" prefWidth="167.0" text="HOME" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="18.0">
                      <font>
                         <Font name="Arial Bold Italic" size="15.0" />
                      </font>
@@ -75,12 +75,12 @@
                         </Label>
                         <Label fx:id="setCRN" prefHeight="17.0" prefWidth="147.0" text="setCRN" GridPane.columnIndex="1" />
                         <Label fx:id="setDays" prefHeight="17.0" prefWidth="106.0" text="setDays" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="setStartTime" text="setStartTime" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="setEndTime" prefHeight="17.0" prefWidth="115.0" text="setEndTime" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="setStartTime" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="setEndTime" prefHeight="17.0" prefWidth="115.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <Button fx:id="setInstructor" layoutX="176.0" layoutY="358.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="Assign" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="26.0" />
-                  <Label fx:id="SetInstructorName" layoutX="183.0" layoutY="267.0" prefHeight="34.0" prefWidth="167.0" text="XINGBIN CHEN" AnchorPane.bottomAnchor="97.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="267.0">
+                  <Button fx:id="setInstructor" layoutX="176.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleSetInstructorClick" prefHeight="26.0" prefWidth="186.0" text="Assign" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="26.0" />
+                  <Label fx:id="SetInstructorName" layoutX="183.0" layoutY="267.0" prefHeight="34.0" prefWidth="216.0" text="XINGBIN CHEN" AnchorPane.bottomAnchor="97.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="267.0">
                      <font>
                         <Font name="Arial Bold Italic" size="20.0" />
                      </font>
@@ -93,9 +93,24 @@
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding></Button>
-                  <Label fx:id="setInstructorID" layoutX="186.0" layoutY="301.0" prefHeight="34.0" prefWidth="160.0" text="0000112" AnchorPane.bottomAnchor="63.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="301.0">
+                  <Label fx:id="setInstructorID" layoutX="255.0" layoutY="319.0" prefHeight="34.0" prefWidth="92.0" text="0000112" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="319.0">
                      <font>
-                        <Font name="System Italic" size="16.0" />
+                        <Font name="Arial Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="setRank" layoutX="254.0" layoutY="298.0" prefHeight="27.0" prefWidth="137.0" text="PROF" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="298.0">
+                     <font>
+                        <Font name="Arial Bold Italic" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="176.0" layoutY="323.0" prefHeight="27.0" prefWidth="63.0" text="ID NO:" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="149.0" AnchorPane.topAnchor="323.0">
+                     <font>
+                        <Font name="Arial Bold Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="182.0" layoutY="298.0" prefHeight="27.0" prefWidth="71.0" text="Rank:" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="298.0">
+                     <font>
+                        <Font name="Arial Bold Italic" size="20.0" />
                      </font>
                   </Label>
                </children>

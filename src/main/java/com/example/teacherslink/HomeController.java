@@ -26,6 +26,7 @@ public class HomeController {
     @FXML
     private void handleScheduleBuilderClick() {
         try {
+            ExcelProcessor.processExcelFile("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
             CourseReader.readCoursesFromCSV();
             // Load the new scene from ScheduleBuilderView.fxml
             Parent scheduleBuilderViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/ScheduleBuilderView.fxml"));

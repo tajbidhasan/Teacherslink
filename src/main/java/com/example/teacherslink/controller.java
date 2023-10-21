@@ -225,7 +225,7 @@ public class controller {
         if (instructor != null) {
             nameLabel.setText(instructor.getName());
             idLabel.setText(instructor.getID_no());
-            rankLabel.setText(instructor.getRank());
+            rankLabel.setText(instructor.getRank().toString());
             homeCampusLabel.setText(instructor.getHome_campus());
             preferredCampusLabel.setText(instructor.getCampus());
             onlineCertLabel.setText(String.valueOf(instructor.getOnline()));

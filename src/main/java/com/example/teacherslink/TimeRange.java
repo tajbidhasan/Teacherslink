@@ -17,6 +17,10 @@ public final class TimeRange {
         this.start = start;
         this.end = end;
     }
+    public boolean encompasses(TimeRange other) {
+        return !this.start.isAfter(other.start) && !this.end.isBefore(other.end);
+    }
+
 
     public LocalTime getStart() {
         return start;

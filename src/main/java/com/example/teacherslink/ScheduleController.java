@@ -4,12 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ScheduleController {
+
     @FXML
     private Label SetCourse;
 
@@ -20,16 +31,16 @@ public class ScheduleController {
     private ListView<Course> UnassignedCourseList;
 
     @FXML
-    private Button goHome;
+    private Button homeButton;
 
     @FXML
     private ListView<Instructor> instructorList;
 
     @FXML
-    private TextField instructorSearchField;
+    private TextField instructorSearchField; // to find instructor by name or id
 
     @FXML
-    private Button searchButton;
+    private Button searchButton; // search courses
 
     @FXML
     private TextField searchField;
@@ -54,6 +65,8 @@ public class ScheduleController {
 
     @FXML
     private Label setStartTime;
+    @FXML
+    private Label setRank;
 
     @FXML
     void SeachInstructor(ActionEvent event) {
@@ -62,19 +75,47 @@ public class ScheduleController {
     private InstructorDatabase instructorDatabase;
     private CourseDataSet courseDataSet;
 
+    private Instructor selectedInstructor; // Store the selected instructor
 
+    @FXML
+    private void handleSetInstructorClick() {
+        Course selectedCourse = UnassignedCourseList.getSelectionModel().getSelectedItem();
+
+        if (selectedCourse != null && selectedInstructor != null) {
+            // Assign the selected instructor to the selected course
+            selectedCourse.setInstructor(selectedInstructor);
+            selectedInstructor.assignCourse(selectedCourse);
+            populateUnassignedCourses(); // Refresh the unassigned course list
+            // Optionally, clear the instructor selection and disable the setInstructor button
+            instructorList.getSelectionModel().clearSelection();
+
+            setInstructor.setDisable(true);
+        }
+    }
     @FXML
     public void initialize() {
         instructorDatabase = InstructorDatabase.getInstance();
         courseDataSet = CourseDataSet.getInstance();
-        System.out.println("Total courses: " + courseDataSet.getCourses().size());
-        System.out.println("Initializing...");
+       // System.out.println("Total courses: " + courseDataSet.getCourses().size());
+      //  System.out.println("Initializing...");
         populateUnassignedCourses();
 
         // Add a listener to detect when a course is selected in the ListView
         UnassignedCourseList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 displayCourseDetails(newValue);
+                populateInstructorsForCourse(newValue);
+
+
+            }
+        });
+
+
+        instructorList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                displayInstructorDetails(newValue);
+                setInstructor.setDisable(false); // Enable the setInstructor button
+                selectedInstructor = newValue; // Store the selected instructor for later use
             }
         });
     }
@@ -93,9 +134,83 @@ public class ScheduleController {
         setCRN.setText(Integer.toString(selectedCourse.getCrn()));
         setCourseTitle.setText(selectedCourse.getCourseTitle());
         setDays.setText(selectedCourse.getDays());
-        setEndTime.setText(selectedCourse.getEndTime().toString());
-        setStartTime.setText(selectedCourse.getBeginTime().toString());
+
+        // Convert endTime from 24-hour to 12-hour format
+        String endTime24Hour = selectedCourse.getEndTime().toString();
+        SimpleDateFormat sdf24Hour = new SimpleDateFormat("HH:mm", Locale.US);
+        SimpleDateFormat sdf12Hour = new SimpleDateFormat("hh:mm a", Locale.US);
+        try {
+            Date date = sdf24Hour.parse(endTime24Hour);
+            String endTime12Hour = sdf12Hour.format(date);
+            setEndTime.setText(endTime12Hour);
+        } catch (ParseException e) {
+            // Handle the parsing exception here if necessary
+        }
+
+        // Convert startTime from 24-hour to 12-hour format
+        String startTime24Hour = selectedCourse.getBeginTime().toString();
+        try {
+            Date date = sdf24Hour.parse(startTime24Hour);
+            String startTime12Hour = sdf12Hour.format(date);
+            setStartTime.setText(startTime12Hour);
+        } catch (ParseException e) {
+            // Handle the parsing exception here if necessary
+        }
+
         SetCourse.setText(selectedCourse.getCourse()); // Assuming the method name is getCourseName
+    }
+
+    private void populateInstructorsForCourse(Course selectedCourse) {
+        ObservableList<Instructor> instructorsForCourse = FXCollections.observableArrayList();
+
+        for (Instructor instructor : instructorDatabase.getAllInstructors()) {
+            if (instructor.courseExists(selectedCourse.getCourse())) {
+                if (instructor.isAvailableToTeach(selectedCourse) && instructor.canTeachAnotherCourse()) { // Replace isAvailableDuring with isAvailableToTeach
+                    instructorsForCourse.add(instructor);
+                }
+            }
+        }
+
+        ObservableList<Instructor> sortedInstructors = instructorsForCourse.stream()
+                .sorted(Comparator.comparingInt(instructor -> instructor.getRank().ordinal()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+        instructorList.setItems(sortedInstructors);
+    }
+
+
+
+    private void displayInstructorDetails(Instructor selectedInstructor) {
+
+        SetInstructorName.setText(selectedInstructor.getName()); // Assuming the instructor class has a getName() method
+        setInstructorID.setText(selectedInstructor.getID_no()); // Assuming the instructor class has an getId() method that returns int
+        setRank.setText(selectedInstructor.getRank().toString());
+    }
+
+
+
+    @FXML
+    private void handleHomeClick() {
+        try {
+            CourseReader.readCoursesFromCSV();
+            // Load the new scene from courseView.fxml
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
+            Scene courseViewScene = new Scene(courseViewRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) homeButton.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(courseViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
     }
 
 

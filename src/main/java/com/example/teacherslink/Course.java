@@ -21,26 +21,8 @@ public class Course {
         this.crn = crn;
         this.course = course;
     }
-    /**
-     * Checks if the given time range overlaps with the course's time.
-     *
-     * @param otherBeginTime - start time of the time range to check
-     * @param otherEndTime - end time of the time range to check
-     * @return true if there's an overlap, false otherwise
-     */
-    public boolean doesTimeOverlap(LocalTime otherBeginTime, LocalTime otherEndTime) {
-        return !(otherEndTime.isBefore(this.beginTime) || otherBeginTime.isAfter(this.endTime));
-    }
 
-    /**
-     * Checks if the given time range overlaps with the course's time.
-     *
-     * @param otherTimeRange - the time range to check
-     * @return true if there's an overlap, false otherwise
-     */
-    public boolean doesTimeOverlap(TimeRange otherTimeRange) {
-        return doesTimeOverlap(otherTimeRange.getStart(), otherTimeRange.getEnd());
-    }
+
     public String getCourse() {
         return course;
     }
@@ -117,7 +99,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "CRN: " + crn + " | " + course + " - " + courseTitle;
+        return course + " - " + courseTitle;
     }
 
 }
