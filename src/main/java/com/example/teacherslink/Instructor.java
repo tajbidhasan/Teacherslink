@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Instructor {
+    private Ranks rank;
     String ID_no;
     String Home_campus;
     String Business_number;
@@ -15,7 +16,7 @@ public class Instructor {
     String Home_phone;
     String college_date;
     List<String> courses = new ArrayList<>();  // changed from String to ArrayList<String>
-    String rank;
+   // String rank;
     Boolean Online;
     String campus;
     Boolean Second_course;
@@ -116,6 +117,9 @@ public class Instructor {
     }
 
 
+    public void setRank(Ranks rank) {
+        this.rank = rank;
+    }
 
     public void setCollege_date(String college_date) {
         this.college_date = college_date;
@@ -132,13 +136,11 @@ public class Instructor {
             this.courses.add(course.trim());
         }
     }
-    public String getRank() {
+    public Ranks getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
+
 
     public Boolean getOnline() {
         return Online;

@@ -40,7 +40,17 @@ public class ExcelProcessor {
                     instructor.setCollege_date(getCellValue(sheet.getRow(rowIndex + 1).getCell(2)));
                     instructor.setCourse(getCellValue(sheet.getRow(rowIndex + 2).getCell(2)));
 
-                    instructor.setRank(getCellValue(currentRow.getCell(3)));
+                    String cellValue = getCellValue(currentRow.getCell(3));
+
+                    if ("A1".equals(cellValue)) {
+                        instructor.setRank(Ranks.PROF);
+                    } else if ("A2".equals(cellValue)) {
+                        instructor.setRank(Ranks.ASSOCIATE_PROF);
+                    } else if ("A3".equals(cellValue)) {
+                        instructor.setRank(Ranks.ASSISTANT_PROF);
+                    } else if ("A4".equals(cellValue)) {
+                        instructor.setRank(Ranks.LECTURER);
+                    }
 
                     if ("Y".equalsIgnoreCase(getCellValue(currentRow.getCell(4)))) {
                         instructor.setOnline(true);

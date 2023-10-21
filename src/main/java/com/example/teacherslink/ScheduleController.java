@@ -4,10 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class ScheduleController {
     @FXML
@@ -20,7 +28,7 @@ public class ScheduleController {
     private ListView<Course> UnassignedCourseList;
 
     @FXML
-    private Button goHome;
+    private Button homeButton;
 
     @FXML
     private ListView<Instructor> instructorList;
@@ -54,6 +62,8 @@ public class ScheduleController {
 
     @FXML
     private Label setStartTime;
+    @FXML
+    private Label setRank;
 
     @FXML
     void SeachInstructor(ActionEvent event) {
@@ -75,6 +85,13 @@ public class ScheduleController {
         UnassignedCourseList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 displayCourseDetails(newValue);
+                populateInstructorsForCourse(newValue);
+            }
+        });
+
+        instructorList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                displayInstructorDetails(newValue);
             }
         });
     }
@@ -96,6 +113,51 @@ public class ScheduleController {
         setEndTime.setText(selectedCourse.getEndTime().toString());
         setStartTime.setText(selectedCourse.getBeginTime().toString());
         SetCourse.setText(selectedCourse.getCourse()); // Assuming the method name is getCourseName
+    }
+    private void populateInstructorsForCourse(Course selectedCourse) {
+        ObservableList<Instructor> instructorsForCourse = FXCollections.observableArrayList();
+
+        for (Instructor instructor : instructorDatabase.getAllInstructors()) { // Assuming there's a getInstructors method
+            if (instructor.courseExists(selectedCourse.getCourse())) {
+                instructorsForCourse.add(instructor);
+            }
+        }
+
+        ObservableList<Instructor> sortedInstructors = instructorsForCourse.stream()
+                .sorted(Comparator.comparingInt(instructor -> instructor.getRank().ordinal()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+        instructorList.setItems(sortedInstructors); // Set the sorted list to instructorList
+    }
+    private void displayInstructorDetails(Instructor selectedInstructor) {
+        SetInstructorName.setText(selectedInstructor.getName()); // Assuming the instructor class has a getName() method
+        setInstructorID.setText(selectedInstructor.getID_no()); // Assuming the instructor class has an getId() method that returns int
+        setRank.setText(selectedInstructor.getRank().toString());
+    }
+
+
+    @FXML
+    private void handleHomeClick() {
+        try {
+            CourseReader.readCoursesFromCSV();
+            // Load the new scene from courseView.fxml
+            Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
+            Scene courseViewScene = new Scene(courseViewRoot);
+
+            // Get the current stage
+            Stage currentStage = (Stage) homeButton.getScene().getWindow();
+
+            // Set the new scene
+            currentStage.setScene(courseViewScene);
+
+            // Set the width and height for the stage
+            currentStage.setWidth(800);
+            currentStage.setHeight(700);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the error (e.g., show an error dialog)
+        }
     }
 
 
