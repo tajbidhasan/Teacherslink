@@ -16,9 +16,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
-public class CourseController {
+public class CourseController implements Serializable {
 
     @FXML
     private Button homeButton;
@@ -55,7 +57,8 @@ public class CourseController {
 
     @FXML
     private Label setPOT;
-
+    @FXML
+    private Label setInstructor;
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
         searchCourses();
@@ -76,6 +79,7 @@ public class CourseController {
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("h:mma");
 
         setCourseName.setText(course.getCourse());
+        setInstructor.setText(course.getInstructor().getName());
         setCourseTitle.setText(course.getCourseTitle());
         setCrn.setText(String.valueOf(course.getCrn()));
         setPOT.setText(course.getPartOfTerm());
@@ -83,13 +87,28 @@ public class CourseController {
         setDays.setText(course.getDays());
         setBeginTime.setText(course.getBeginTime().format(outputFormatter));  // Format to 12-hour time with AM/PM
         setEndTime.setText(course.getEndTime().format(outputFormatter));      // Format to 12-hour time with AM/PM
+
     }
 
 
     private void populateListView() {
-        ObservableList<Course> courseList = FXCollections.observableArrayList(CourseDataSet.getInstance().getCourses().values());
+        ObservableList<Course> courseList = FXCollections.observableArrayList(
+                CourseDataSet.getInstance().getCourses().values()
+                        .stream()
+                        .filter(course -> course.getInstructor() != null && !course.getInstructor().getName().isEmpty())
+                        .collect(Collectors.toList())
+        );
+
         listView.setItems(courseList);
+
+        // Select the first course in the list by default
+        if (!courseList.isEmpty()) {
+            listView.getSelectionModel().select(0);
+            displayCourseDetails(courseList.get(0));
+        }
     }
+
+
 
     private void searchCourses() {
         String query = searchbar.getText().trim();
@@ -109,7 +128,7 @@ public class CourseController {
     @FXML
     private void handleHomeClick() {
         try {
-            CourseReader.readCoursesFromCSV();
+
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);

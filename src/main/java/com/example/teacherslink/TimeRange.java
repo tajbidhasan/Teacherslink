@@ -1,8 +1,9 @@
 package com.example.teacherslink;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public final class TimeRange {
+public final class TimeRange implements Serializable {
     private final LocalTime start;
     private final LocalTime end;
 

@@ -1,11 +1,11 @@
 package com.example.teacherslink;
 
+import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class Instructor {
+public class Instructor implements Serializable {
+
     private Ranks rank;
     String ID_no;
     String Home_campus;
@@ -15,7 +15,7 @@ public class Instructor {
     String City_state_zip;
     String Home_phone;
     String college_date;
-    List<String> courses = new ArrayList<>();  // changed from String to ArrayList<String>
+    HashMap<String, Integer> courses = new HashMap<>();
    // String rank;
     Boolean Online;
     String campus;
@@ -73,9 +73,6 @@ public class Instructor {
         Home_campus = home_campus;
     }
 
-    public String getBusiness_number() {
-        return Business_number;
-    }
 
     public void setBusiness_number(String business_number) {
         Business_number = business_number;
@@ -89,25 +86,16 @@ public class Instructor {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public String getCity_state_zip() {
-        return City_state_zip;
-    }
 
     public void setCity_state_zip(String city_state_zip) {
         City_state_zip = city_state_zip;
     }
 
-    public String getHome_phone() {
-        return Home_phone;
-    }
 
     public void setHome_phone(String home_phone) {
         Home_phone = home_phone;
@@ -121,16 +109,33 @@ public class Instructor {
     public void setCollege_date(String college_date) {
         this.college_date = college_date;
     }
-    public List<String> getCourses() {
-        return courses;
-    }
+
     public String getCoursesAsString() {
-        return String.join(", ", courses); // Assumes courses is the ArrayList<String> field in the Instructor class
+        return String.join(", ", courses.keySet());
     }
+
     public void setCourse(String coursesString) {
         String[] coursesArray = coursesString.split(" ");
         for(String course : coursesArray) {
-            this.courses.add(course.trim());
+            courses.put(course.trim(), 0); // Adds the course with a frequency of 0.
+        }
+    }
+    public int getCourseFrequency(String courseName) {
+        // Check if the course exists in the map
+        if (courses.containsKey(courseName)) {
+            return courses.get(courseName);
+        } else {
+            System.out.println("Course " + courseName + " does not exist for this instructor.");
+            return -1; // Return -1 or any other value to indicate that the course doesn't exist
+        }
+    }
+
+
+    public void setCourseFrequency(String courseName, int frequency) {
+        if (courses.containsKey(courseName)) {
+            courses.put(courseName, frequency);
+        } else {
+            System.out.println("Course " + courseName + " does not exist.");
         }
     }
     public Ranks getRank() {
@@ -189,8 +194,15 @@ public class Instructor {
 
 
     public boolean courseExists(String courseToCheck) {
-        return courses.contains(courseToCheck);
+        return courses.containsKey(courseToCheck);
     }
+    public void printCourses() {
+        System.out.println("Courses and their frequencies:");
+        for (Map.Entry<String, Integer> entry : courses.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
 
     private String array2DToString(boolean[][] array) {
         StringBuilder sb = new StringBuilder("[");
@@ -203,46 +215,11 @@ public class Instructor {
         sb.append("]");
         return sb.toString();
     }
-    public boolean isAvailableDuring(LocalTime startTime, LocalTime endTime) {
-        if (this.availableFrom == null || this.availableTo == null) {
-            return false; // Not available if times are not set.
-        }
-
-        TimeRange courseTimeRange = new TimeRange(startTime, endTime);
-
-        // Check if the instructor's availability overlaps with the course time range
-        boolean isTimeOverlap = courseTimeRange.isOverlapping(new TimeRange(this.availableFrom.getStart(), this.availableTo.getEnd()));
-
-        // If the time doesn’t overlap, then it’s not necessary to check the days availability
-        if (!isTimeOverlap) return false;
-
-        // Check the instructor’s availability based on the days and times.
-        int startIndex = startTime.getHour();
-        int endIndex = endTime.getHour();
-
-        for (int i = 0; i < 5; i++) { // Check for Mon-Fri
-            boolean isAvailable = true;
-            for (int j = startIndex; j < endIndex; j++) {
-                if (!mon_friday[i][j]) { // Not available in this hour on this day
-                    isAvailable = false;
-                    break;
-                }
-            }
-            if (isAvailable) {
-                return true;
-            }
-        }
-
-        // Check availability for the weekend days
-        if ((saturday && startIndex >= 0 && endIndex <= 24) ||
-                (sunday && startIndex >= 0 && endIndex <= 24)) {
-            return true;
-        }
-
-        return false; // Not available during this time range on any day
-    }
     public boolean isAvailableToTeach(Course course) {
         if("ONLINE".equals(course.getDays()) && Online){
+            return true;
+        }
+        if("S".equals(course.getDays()) && isSaturday()){
             return true;
         }
         // Convert the course's start and end times to a TimeRange.
@@ -316,5 +293,42 @@ public class Instructor {
         return name;
     }
 
+    public void updateAvailability(Course course) {
+        String days = course.getDays(); // Example: "MTR"
+        TimeRange courseTimeRange = new TimeRange(course.getBeginTime(), course.getEndTime());
+        Period coursePeriod = null;
+        for (Period period : Period.values()) {
+            if (period.getTimeRange().isOverlapping(courseTimeRange)) {
+                coursePeriod = period;
+                break;
+            }
+        }
+        if (coursePeriod != null) {
+            int periodIndex = coursePeriod.ordinal();
+            for (char dayChar : days.toCharArray()) {
+                int dayIndex;
+                switch (dayChar) {
+                    case 'M':
+                        dayIndex = 0;
+                        break;
+                    case 'T':
+                        dayIndex = 1;
+                        break;
+                    case 'W':
+                        dayIndex = 2;
+                        break;
+                    case 'R':
+                        dayIndex = 3;
+                        break;
+                    case 'F':
+                        dayIndex = 4;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown day character: " + dayChar);
+                }
+                mon_friday[dayIndex][periodIndex] = false;  // Update the instructor's availability
+            }
+        }
+    }
 
 }

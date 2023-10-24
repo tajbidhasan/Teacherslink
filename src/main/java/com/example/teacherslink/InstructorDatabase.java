@@ -1,14 +1,15 @@
 package com.example.teacherslink;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class InstructorDatabase {
-
+public class InstructorDatabase implements Serializable {
+    private static final long serialVersionUID = 1L;
     // Static instance of the class
-    private static final InstructorDatabase INSTANCE = new InstructorDatabase();
+    private static InstructorDatabase INSTANCE = new InstructorDatabase();
 
     private Map<String, Instructor> instructorsMap;
 
@@ -20,6 +21,11 @@ public class InstructorDatabase {
     // Public method to provide access to the instance
     public static InstructorDatabase getInstance() {
         return INSTANCE;
+    }
+    public static void setInstance(InstructorDatabase instance) {
+        if (instance != null) {
+            INSTANCE = instance;
+        }
     }
 
     // Add or update an instructor in the database

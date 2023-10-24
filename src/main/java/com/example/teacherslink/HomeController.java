@@ -9,8 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class HomeController {
+public class HomeController implements Serializable {
     @FXML
     private Button getCourses;
 
@@ -26,8 +27,9 @@ public class HomeController {
     @FXML
     private void handleScheduleBuilderClick() {
         try {
-            ExcelProcessor.processExcelFile("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
-            CourseReader.readCoursesFromCSV();
+            //ExcelProcessor.processExcelFile("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
+            //CourseReader.readCoursesFromCSV();
+            //ExcelProcessor.processFrequencyFile("/Users/tajbidhasan/Desktop/intillij JAVA/CS248/src/main/resources/Frequency.xlsx");
             // Load the new scene from ScheduleBuilderView.fxml
             Parent scheduleBuilderViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/ScheduleBuilderView.fxml"));
 
@@ -55,6 +57,7 @@ public class HomeController {
         try {
             // Load the new scene from instructorView.fxml
             Parent instructorViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/InstructorView.fxml"));
+          //  ExcelProcessor.processFrequencyFile("/Users/tajbidhasan/Desktop/intillij JAVA/CS248/src/main/resources/Frequency.xlsx");
 
 
             Scene instructorViewScene = new Scene(instructorViewRoot);
@@ -78,7 +81,7 @@ public class HomeController {
     @FXML
     private void handleGetCoursesClick() {
         try {
-            CourseReader.readCoursesFromCSV();
+            //CourseReader.readCoursesFromCSV();
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/courseView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);

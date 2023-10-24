@@ -1,5 +1,7 @@
 package com.example.teacherslink;
 
-public enum Ranks {
+import java.io.Serializable;
+
+public enum Ranks implements Serializable {
     PROF, ASSOCIATE_PROF, ASSISTANT_PROF, LECTURER;
 }

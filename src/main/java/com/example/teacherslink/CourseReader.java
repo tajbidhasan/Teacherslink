@@ -3,11 +3,12 @@ package com.example.teacherslink;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.TreeMap;
 
-public class CourseReader {
+public class CourseReader implements Serializable {
 
     private static final String CSV_FILE_PATH = "/CourseInformation.csv";
 

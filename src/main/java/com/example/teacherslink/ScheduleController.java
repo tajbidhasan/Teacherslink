@@ -14,12 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ScheduleController {
+public class ScheduleController implements Serializable {
 
     @FXML
     private Label SetCourse;
@@ -72,11 +73,14 @@ public class ScheduleController {
     void SeachInstructor(ActionEvent event) {
 
     }
+
+    @FXML
+    private Label showFrequancy;
     private InstructorDatabase instructorDatabase;
     private CourseDataSet courseDataSet;
 
     private Instructor selectedInstructor; // Store the selected instructor
-
+    private String selectedCourse;
     @FXML
     private void handleSetInstructorClick() {
         Course selectedCourse = UnassignedCourseList.getSelectionModel().getSelectedItem();
@@ -85,13 +89,18 @@ public class ScheduleController {
             // Assign the selected instructor to the selected course
             selectedCourse.setInstructor(selectedInstructor);
             selectedInstructor.assignCourse(selectedCourse);
+
+            // Update the instructor's availability based on the assigned course
+            selectedInstructor.updateAvailability(selectedCourse);
+
             populateUnassignedCourses(); // Refresh the unassigned course list
+
             // Optionally, clear the instructor selection and disable the setInstructor button
             instructorList.getSelectionModel().clearSelection();
-
             setInstructor.setDisable(true);
         }
     }
+
     @FXML
     public void initialize() {
         instructorDatabase = InstructorDatabase.getInstance();
@@ -105,7 +114,7 @@ public class ScheduleController {
             if (newValue != null) {
                 displayCourseDetails(newValue);
                 populateInstructorsForCourse(newValue);
-
+                selectedCourse = newValue.getCourse();
 
             }
         });
@@ -164,19 +173,25 @@ public class ScheduleController {
         ObservableList<Instructor> instructorsForCourse = FXCollections.observableArrayList();
 
         for (Instructor instructor : instructorDatabase.getAllInstructors()) {
-            if (instructor.courseExists(selectedCourse.getCourse())) {
-                if (instructor.isAvailableToTeach(selectedCourse) && instructor.canTeachAnotherCourse()) { // Replace isAvailableDuring with isAvailableToTeach
-                    instructorsForCourse.add(instructor);
-                }
+
+            if (instructor.courseExists(selectedCourse.getCourse()) &&
+                    instructor.isAvailableToTeach(selectedCourse) &&
+                    instructor.canTeachAnotherCourse()) {
+
+                instructorsForCourse.add(instructor);
             }
         }
 
         ObservableList<Instructor> sortedInstructors = instructorsForCourse.stream()
-                .sorted(Comparator.comparingInt(instructor -> instructor.getRank().ordinal()))
+                .sorted(Comparator.comparingInt((Instructor instructor) ->
+                                instructor.getCourseFrequency(selectedCourse.getCourse())).reversed()
+                        .thenComparing(instructor -> instructor.getRank().ordinal()))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         instructorList.setItems(sortedInstructors);
     }
+
+
 
 
 
@@ -185,6 +200,7 @@ public class ScheduleController {
         SetInstructorName.setText(selectedInstructor.getName()); // Assuming the instructor class has a getName() method
         setInstructorID.setText(selectedInstructor.getID_no()); // Assuming the instructor class has an getId() method that returns int
         setRank.setText(selectedInstructor.getRank().toString());
+        showFrequancy.setText("Frequancey: "+String.valueOf(selectedInstructor.getCourseFrequency(selectedCourse)));
     }
 
 
@@ -192,7 +208,7 @@ public class ScheduleController {
     @FXML
     private void handleHomeClick() {
         try {
-            CourseReader.readCoursesFromCSV();
+
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);

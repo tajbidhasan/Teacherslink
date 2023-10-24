@@ -5,8 +5,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class ExcelProcessor {
+public class ExcelProcessor implements Serializable {
 
     // Create an instance of the InstructorDatabase
     static InstructorDatabase db = InstructorDatabase.getInstance();
@@ -111,7 +115,7 @@ public class ExcelProcessor {
             }
 
             System.out.println(db.getInstructorCount());
-            db.printAllInstructors();
+
         }
     }
     private static String getCellValue(Cell cell) {
@@ -158,6 +162,92 @@ public class ExcelProcessor {
                     break;
             }
         }
+    }
+    public static void processFrequencyFile(String filePath) throws IOException {
+        // Open the Excel workbook
+        try (XSSFWorkbook workbook = new XSSFWorkbook(filePath)) {
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            int rowNum = 1;  // Adding a row counter for debugging
+
+            for (Row row : sheet) {
+                System.out.println("Processing row: " + rowNum++);
+
+                Cell idCell = row.getCell(0);
+                Cell freqCell = row.getCell(10);
+
+                // Check if the first and eighth cells are not null and not blank
+                if (idCell != null && !idCell.toString().trim().isEmpty() &&
+                        freqCell != null && !freqCell.toString().trim().isEmpty()) {
+
+                    // Fetch cell values as strings
+                    String instructorId = getCellValueAsString(idCell);
+                    String courseFrequencyData = getCellValueAsString(freqCell);
+
+                    System.out.println("Instructor ID: " + instructorId);
+                    System.out.println("Frequency Data: " + courseFrequencyData);
+
+                    // Check if the instructor ID is valid
+                    if (isValidId(instructorId)) {
+                        // Extract course frequency data
+                        HashMap<String, Integer> courseFrequency = extractCourseFrequency(courseFrequencyData);
+
+                        try {
+                            Instructor instructor = db.getInstructor(instructorId);
+                            if (instructor != null) {
+                                System.out.println("Found instructor: " + instructor.name);
+                                for (String course : courseFrequency.keySet()) {
+                                    int frequency = courseFrequency.get(course);
+                                    System.out.println("Setting frequency for course: " + course + " as: " + frequency);
+                                    instructor.setCourseFrequency(course, frequency);
+                                }
+                            } else {
+                                System.out.println("Instructor with ID: " + instructorId + " not found in the database.");
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error retrieving instructor with ID: " + instructorId);
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("Invalid Instructor ID: " + instructorId);
+                    }
+                } else {
+                    System.out.println("Either ID cell or Frequency cell is empty for row: " + rowNum);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error processing the Excel file.");
+            e.printStackTrace();
+        }
+    }
+
+    private static String getCellValueAsString(Cell cell) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                // Convert numeric value to String
+                return Double.toString(cell.getNumericCellValue());
+            // ... handle other types as necessary ...
+            default:
+                return "";  // or throw an exception if you wish
+        }
+    }
+
+    private static HashMap<String, Integer> extractCourseFrequency(String courseFrequencyData) {
+        HashMap<String, Integer> courseFrequency = new HashMap<>();
+
+        // Regular expression pattern to match course and its frequency
+        Pattern pattern = Pattern.compile("(\\w+):\\s*(\\d+)");
+        Matcher matcher = pattern.matcher(courseFrequencyData);
+
+        while (matcher.find()) {
+            String course = matcher.group(1);
+            int frequency = Integer.parseInt(matcher.group(2));
+            courseFrequency.put(course, frequency);
+        }
+
+        return courseFrequency;
     }
 
 

@@ -1,9 +1,10 @@
 package com.example.teacherslink;
 
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Course {
+public class Course implements Serializable {
 
     private String course;        // subject + course number
     private String courseTitle;   // course title

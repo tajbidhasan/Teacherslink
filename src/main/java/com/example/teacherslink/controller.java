@@ -12,9 +12,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
-public class controller {
+public class controller implements Serializable {
 
     InstructorDatabase db = InstructorDatabase.getInstance();
 
@@ -164,7 +165,7 @@ public class controller {
     @FXML
     private void handleHomeClick() {
         try {
-            CourseReader.readCoursesFromCSV();
+           // CourseReader.readCoursesFromCSV();
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);
@@ -291,26 +292,26 @@ public class controller {
 
 
     public void initialize() {
-        //load the excle file auto
-        processDefaultExcelFile();
-        // Set the initial position of the divider for splitPane1 to 0.33 (33%)
         splitPane1.setDividerPositions(0.36);
-
-        // Add a listener to the divider's position property to make it non-movable
         splitPane1.getDividers().get(0).positionProperty().addListener((obs, oldVal, newVal) -> {
             splitPane1.setDividerPositions(0.36);
         });
 
-        // Set the initial position of the divider for splitPane2 to 0.45 (45%)
         splitPane2.setDividerPositions(0.55);
-
-        // Add a listener to the divider's position property to make it non-movable
         splitPane2.getDividers().get(0).positionProperty().addListener((obs, oldVal, newVal) -> {
             splitPane2.setDividerPositions(0.55);
         });
+
+        // Directly fetch the instructors from the database and set them to the listview
+        List<Instructor> allInstructors = db.getAllInstructors();
+        instructors.clear();
+        instructors.addAll(allInstructors);
+        listview.setItems(instructors);
+
         listview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 displayInstructorDetailsByID(newSelection.getID_no());
+                newSelection.printCourses();
             }
         });
     }
