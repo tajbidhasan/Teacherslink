@@ -3,19 +3,20 @@ package com.example.teacherslink;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Instructor implements Serializable {
 
     private Ranks rank;
-    String ID_no;
-    String Home_campus;
-    String Business_number;
-    String name;
-    String address;
-    String City_state_zip;
-    String Home_phone;
-    String college_date;
-    HashMap<String, Integer> courses = new HashMap<>();
+    private String ID_no;
+    private  String Home_campus;
+    private String Business_number;
+    private String name;
+    private String address;
+    private String City_state_zip;
+    private String Home_phone;
+    private String college_date;
+    private HashMap<String, Integer> courses = new HashMap<>();
    // String rank;
     Boolean Online;
     String campus;
@@ -117,7 +118,7 @@ public class Instructor implements Serializable {
     public void setCourse(String coursesString) {
         String[] coursesArray = coursesString.split(" ");
         for(String course : coursesArray) {
-            courses.put(course.trim(), 0); // Adds the course with a frequency of 0.
+            courses.put(course.trim(), 0);
         }
     }
     public int getCourseFrequency(String courseName) {
@@ -184,9 +185,7 @@ public class Instructor implements Serializable {
 
 
 
-    public String getFall_workload() {
-        return fall_workload;
-    }
+
 
     public void setFall_workload(String fall_workload) {
         this.fall_workload = fall_workload;
@@ -203,7 +202,7 @@ public class Instructor implements Serializable {
         }
     }
 
-
+    // test for Availability
     private String array2DToString(boolean[][] array) {
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < array.length; i++) {
@@ -284,6 +283,11 @@ public class Instructor implements Serializable {
             System.out.println("Instructor " + name + " has reached the maximum number of courses they can teach.");
         }
     }
+    public String getAssignedCourseNames() {
+        return assignedCourses.stream()
+                .map(Course::getCourse)
+                .collect(Collectors.joining(", "));
+    }
 
     public List<Course> getAssignedCourses() {
         return assignedCourses;
@@ -295,6 +299,7 @@ public class Instructor implements Serializable {
 
     public void updateAvailability(Course course) {
         String days = course.getDays(); // Example: "MTR"
+
         TimeRange courseTimeRange = new TimeRange(course.getBeginTime(), course.getEndTime());
         Period coursePeriod = null;
         for (Period period : Period.values()) {
@@ -323,12 +328,24 @@ public class Instructor implements Serializable {
                     case 'F':
                         dayIndex = 4;
                         break;
+                    case 'S':
+                        dayIndex = 5; // 'S' corresponds to Saturday
+                        break;
                     default:
                         throw new IllegalArgumentException("Unknown day character: " + dayChar);
                 }
-                mon_friday[dayIndex][periodIndex] = false;  // Update the instructor's availability
+                if (dayIndex >= 0 && dayIndex <= 4) {
+                    // Update availability for Monday to Friday
+                    mon_friday[dayIndex][periodIndex] = false;
+                } else if (dayIndex == 5) {
+                    // Update availability for Saturday
+                    setSaturday(false);
+                } else {
+                    throw new IllegalArgumentException("Invalid day character: " + dayChar);
+                }
             }
         }
     }
+
 
 }

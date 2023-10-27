@@ -165,7 +165,7 @@ public class controller implements Serializable {
     @FXML
     private void handleHomeClick() {
         try {
-           // CourseReader.readCoursesFromCSV();
+           // CourseReader.readCoursesFromCSV(); (test)
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("HomeView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);
@@ -202,7 +202,7 @@ public class controller implements Serializable {
         if (selectedFile != null) {
             try {
                 ExcelProcessor.processExcelFile(selectedFile.getPath());
-               // System.out.println(selectedFile.getPath());
+               // System.out.println(selectedFile.getPath()); (test)
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Excel file processed successfully!");
                 List<Instructor> allInstructors = db.getAllInstructors(); // Assuming this method returns a List of Instructor objects
                 instructors.clear();
@@ -230,7 +230,7 @@ public class controller implements Serializable {
             homeCampusLabel.setText(instructor.getHome_campus());
             preferredCampusLabel.setText(instructor.getCampus());
             onlineCertLabel.setText(String.valueOf(instructor.getOnline()));
-            coursesLabel.setText(instructor.getCoursesAsString());
+            coursesLabel.setText(instructor.getAssignedCourseNames());
             secondThirdCourseLabel.setText(instructor.getSecond_course() + "/" + instructor.getThird_course());
 
             // Set button colors based on availability
@@ -311,7 +311,7 @@ public class controller implements Serializable {
         listview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 displayInstructorDetailsByID(newSelection.getID_no());
-                newSelection.printCourses();
+               // newSelection.printCourses(); (test)
             }
         });
     }

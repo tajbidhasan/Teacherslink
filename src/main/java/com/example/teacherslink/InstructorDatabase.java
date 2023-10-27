@@ -7,8 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class InstructorDatabase implements Serializable {
-    private static final long serialVersionUID = 1L;
-    // Static instance of the class
+    private static final long serialVersionUID = 1L;    // Static instance of the class
     private static InstructorDatabase INSTANCE = new InstructorDatabase();
 
     private Map<String, Instructor> instructorsMap;
@@ -58,7 +57,7 @@ public class InstructorDatabase implements Serializable {
         return instructorsMap.isEmpty();
     }
 
-    // Print all instructors
+    // Print all instructors (test)
     public void printAllInstructors() {
         for (Instructor instructor : instructorsMap.values()) {
             System.out.println(instructor); // Assumes the Instructor class has a suitable toString() method

@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.TreeMap;
 
 public class CourseDataSet implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Use the correct serialVersionUID value
+
     private static CourseDataSet instance;
     private TreeMap<Integer, Course> courses;
 

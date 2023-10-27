@@ -1,26 +1,26 @@
-Gusack, Russel: MAT001, MAT111, MAT101, MAT103, MAT103
-Iordan, Michev: MAT007, MAT007, MAT006
-Dart, Bridget: MAT009, MAT103, MAT142
-Kiley, Heidi: MAT001, MAT103
-Kim, Myungchul: MAT007, MAT101, MAT101, MAT101
-Keller, Regina: MAT103
-Coe, Russel: MAT101
+Gusack, Russel: MAT001 (CRN: 20677, Days: TR, Time: 18:00-19:15)
+Iordan, Michev: No courses
+Dart, Bridget: No courses
+Kiley, Heidi: No courses
+Kim, Myungchul: MAT103 (CRN: 20701, Days: S, Time: 09:00-11:45), MAT007 (CRN: 21090, Days: MW, Time: 09:30-11:10)
+Keller, Regina: No courses
+Coe, Russel: No courses
 Koukounas, Susan: No courses
-Bonanno, Michael: MAT141, MAT141
-Lowey, Robert: MAT111, MAT111
-Teason, Lisa: MAT131, MAT124, MAT203
-Fulton, James: MAT124, MAT111
-Hu, Vera: MAT103, MAT007, MAT103
-Neus, Jordan: MAT103, MAT103, MAT007
-Chen, Jerry: MAT111
-Atwood, Alexander: MAT205
-Davidson, Christine: MAT111
-Buck, Leslie: MAT103, MAT131
+Bonanno, Michael: No courses
+Lowey, Robert: No courses
+Teason, Lisa: No courses
+Fulton, James: No courses
+Hu, Vera: No courses
+Neus, Jordan: No courses
+Chen, Jerry: MAT111 (CRN: 21111, Days: TR, Time: 11:30-13:10)
+Atwood, Alexander: No courses
+Davidson, Christine: No courses
+Buck, Leslie: No courses
 Alzugaray, Maria Teresa: No courses
-Chu, Adrienne: MAT124, MAT007
-Janicka Wlodek, Krystyna: MAT126
-Jerome, Luckner: MAT111, MAT103
-Koukounas, Theodore: MAT103
-Millings, Rachael: MAT007
-Reissig, Dennis: MAT141
-Yen, Yuet: MAT111
+Chu, Adrienne: No courses
+Janicka Wlodek, Krystyna: No courses
+Jerome, Luckner: No courses
+Koukounas, Theodore: No courses
+Millings, Rachael: No courses
+Reissig, Dennis: MAT141 (CRN: 20818, Days: MW, Time: 18:00-20:20)
+Yen, Yuet: No courses

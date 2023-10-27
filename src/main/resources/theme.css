@@ -1,32 +1,106 @@
+/* Base styles and colors for the modern light theme */
 .root {
-    /* Base color for the light blue theme */
-    -light-blue-theme-color: #E1F5FE;
-    -dark-text-color: #263238;
-    -border-color: #B0BEC5;
+    -primary-color: #F5F5F5;  /* Light Gray for Background */
+    -secondary-color: #4CAF50;  /* Green for Highlights and Button Background */
+    -text-color: #333;  /* Dark text for better contrast on light background */
+    -border-color: #E0E0E0;  /* Slightly darker gray for borders */
+    -hover-color: #ECEFF1;  /* Light blue-ish gray for hover effects */
+}
+/* Styling for ListView */
+.list-view {
+    -fx-background-color: -primary-color;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
 }
 
-/* Common Styles for both buttons and labels */
+/* Styling for ListView cells */
+.list-cell {
+    -fx-padding: 10px 15px; /* Vertical and Horizontal Padding */
+    -fx-background-color: transparent; /* Default transparent background */
+    -fx-text-fill: -text-color;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: -hover-color; /* Hover color for filled cells */
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+    -fx-background-color: -secondary-color; /* Background color for selected items */
+    -fx-text-fill: white; /* Text color for selected items */
+}
+
+.list-cell:empty {
+    -fx-padding: 0;
+}
+/* Common base style for all components */
 .base-style {
     font-family: 'Arial', sans-serif;
     -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 /* Styling for labels */
 .label.base-style {
-    -fx-text-fill: -dark-text-color;
-    -fx-border-color: -border-color;
-    -fx-border-width: 1px;
+    -fx-font-style: italic;  /* Italic font style */
+    -fx-font-weight: bold;   /* Bold font weight */
+    -fx-font-size: 20px;     /* Larger font size */
+    -fx-text-fill: -text-color;
+    -fx-background-color: transparent;
+    -fx-padding: 10px;       /* Padding for better spacing */
+    -fx-border-radius: 5px;  /* Rounded corners for modern touch */
+    -fx-background-radius: 5px;
 }
 
-/* Styling for buttons - only shape */
+/* Universal Styling for all labels */
+.label {
+    -fx-font-style: italic;  /* Italic font style */
+    -fx-font-weight: bold;   /* Bold font weight */
+    -fx-text-fill: -text-color;
+    -fx-background-color: transparent;
+    -fx-padding: 5px;       /* Padding for better spacing */
+}
+
+/* Specific styling for larger labels, like the Course Name and CRN */
+.label.large {
+    -fx-font-size: 26px;
+}
+
+/* Specific styling for medium-sized labels, like the various details */
+.label.medium {
+    -fx-font-size: 20px;
+}
+
+/* Specific styling for smaller labels, like the field names */
+.label.small {
+    -fx-font-size: 15px;
+}
+.background-splitpane {
+    -fx-background-image: url("/BgImage.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+
+/* Styling for buttons */
 .button.base-style {
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: white; /* White text for contrast on green button */
     -fx-border-width: 1px;
     -fx-border-color: -border-color;
-    -fx-text-fill: -dark-text-color;
+    -fx-padding: 10px 20px;  /* Vertical and Horizontal Padding */
+    -fx-cursor: hand;  /* Hand cursor on hover for better UX */
 }
 
 .button.base-style:hover {
-    -fx-background-color: #ECEFF1;
+    -fx-background-color: #45A049;  /* Slightly darker green for hover effect */
+}
+
+/* Background style for AnchorPane */
+.background-anchor-pane {
+    -fx-background-image: url("/BgImageMain.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }

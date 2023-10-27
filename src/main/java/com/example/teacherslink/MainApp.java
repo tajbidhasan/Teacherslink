@@ -11,9 +11,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * The main application class for TeachersLink.
+ * It initializes the JavaFX application, loads the initial UI, and handles application state management.
+ *
+ * @author Tajbid Hasan
+ * @version 1.0
+ * @since 2023-10-27
+ */
 public class MainApp extends Application {
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -41,7 +49,8 @@ public class MainApp extends Application {
     public static void main(String[] args) throws IOException {
         // Load InstructorDatabase
         File instructorFile = new File("instructor_state.ser");
-        if (instructorFile.exists() && !instructorFile.isDirectory()) {
+
+        if (instructorFile.exists() && !instructorFile.isDirectory() && instructorFile.length() > 0) {
             InstructorDatabase db = (InstructorDatabase) StateManager.loadState("instructor_state.ser");
             if (db != null) {
                 InstructorDatabase.setInstance(db);
@@ -49,12 +58,12 @@ public class MainApp extends Application {
         } else {
             ExcelProcessor.processExcelFile("/Users/tajbidhasan/Desktop/CS248/Teacherslink/src/main/resources/Instructors.xlsx");
             ExcelProcessor.processFrequencyFile("/Users/tajbidhasan/Desktop/intillij JAVA/CS248/src/main/resources/Frequency.xlsx");
-
         }
+
 
         // Load CourseDataSet
         File courseFile = new File("course_state.ser");
-        if (courseFile.exists() && !courseFile.isDirectory()) {
+        if (courseFile.exists() && !courseFile.isDirectory() && courseFile.length()>0) {
             CourseDataSet cs = (CourseDataSet) StateManager.loadState("course_state.ser");
             if (cs != null) {
                 CourseDataSet.setInstance(cs);
@@ -80,14 +89,29 @@ public class MainApp extends Application {
     public static void writeInstructorsWithCoursesToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Instructor instructor : InstructorDatabase.getInstance().getAllInstructors()) {
-                List<Course> assignedCourses = instructor.getAssignedCourses(); // Assuming you have this method in your Instructor class
-                String courses = assignedCourses.stream()
-                        .map(Course::getCourse) // Assuming you have getCourseName() in Course class
-                        .collect(Collectors.joining(", "));
-                String line = instructor.getName() + ": " + (courses.isEmpty() ? "No courses" : courses);
+                List<Course> assignedCourses = instructor.getAssignedCourses();
+
+                StringBuilder coursesInfo = new StringBuilder();
+                for (Course course : assignedCourses) {
+                    String courseDetails = String.format("%s (CRN: %s, Days: %s, Time: %s-%s)",
+                            course.getCourse(),
+                            course.getCrn(),
+                            course.getDays(),
+                            course.getBeginTime(),
+                            course.getEndTime());
+
+                    if (coursesInfo.length() > 0) {
+                        coursesInfo.append(", ");
+                    }
+
+                    coursesInfo.append(courseDetails);
+                }
+
+                String line = instructor.getName() + ": " + (coursesInfo.length() == 0 ? "No courses" : coursesInfo.toString());
                 writer.write(line);
                 writer.newLine();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

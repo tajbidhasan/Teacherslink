@@ -100,7 +100,6 @@ public class ScheduleController implements Serializable {
             setInstructor.setDisable(true);
         }
     }
-
     @FXML
     public void initialize() {
         instructorDatabase = InstructorDatabase.getInstance();
@@ -137,6 +136,9 @@ public class ScheduleController implements Serializable {
             }
         }
         UnassignedCourseList.setItems(unassignedCourses);
+        if (!UnassignedCourseList.getItems().isEmpty()) {
+            UnassignedCourseList.getSelectionModel().select(0);
+        }
     }
 
     private void displayCourseDetails(Course selectedCourse) {

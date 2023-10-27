@@ -66,7 +66,7 @@ public class CourseController implements Serializable {
 
     @FXML
     public void initialize() {
-        populateListView(); // Added this line to initially populate the listView
+        populateListView(); // this line to initially populate the listView
 
         listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

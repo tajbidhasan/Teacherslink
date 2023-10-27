@@ -34,7 +34,7 @@ public class HomeController implements Serializable {
             Parent scheduleBuilderViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/ScheduleBuilderView.fxml"));
 
             Scene scheduleBuilderViewScene = new Scene(scheduleBuilderViewRoot);
-
+            scheduleBuilderViewScene.getStylesheets().add(getClass().getResource("/theme.css").toExternalForm());
             // Get the current stage
             Stage currentStage = (Stage) scheduleBuilder.getScene().getWindow();
 
@@ -57,10 +57,10 @@ public class HomeController implements Serializable {
         try {
             // Load the new scene from instructorView.fxml
             Parent instructorViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/InstructorView.fxml"));
-          //  ExcelProcessor.processFrequencyFile("/Users/tajbidhasan/Desktop/intillij JAVA/CS248/src/main/resources/Frequency.xlsx");
 
 
             Scene instructorViewScene = new Scene(instructorViewRoot);
+            instructorViewScene.getStylesheets().add(getClass().getResource("/theme.css").toExternalForm());
 
             // Get the current stage
             Stage currentStage = (Stage) getInstructors.getScene().getWindow();
@@ -81,10 +81,11 @@ public class HomeController implements Serializable {
     @FXML
     private void handleGetCoursesClick() {
         try {
-            //CourseReader.readCoursesFromCSV();
+            //CourseReader.readCoursesFromCSV(); (test)
             // Load the new scene from courseView.fxml
             Parent courseViewRoot = FXMLLoader.load(getClass().getResource("/com/example/teacherslink/courseView.fxml"));
             Scene courseViewScene = new Scene(courseViewRoot);
+            courseViewScene.getStylesheets().add(getClass().getResource("/theme.css").toExternalForm());
 
             // Get the current stage
             Stage currentStage = (Stage) getCourses.getScene().getWindow();

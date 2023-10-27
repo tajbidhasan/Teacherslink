@@ -1,59 +1,59 @@
 MAT001: Gusack, Russel
-MAT007: Iordan, Michev
-MAT103: Neus, Jordan
-MAT103: Neus, Jordan
-MAT103: Hu, Vera
+MAT007: No instructor assigned
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT103: Kim, Myungchul
 MAT001: No instructor assigned
-MAT111: Gusack, Russel
-MAT111: Lowey, Robert
-MAT124: Teason, Lisa
-MAT141: Bonanno, Michael
+MAT111: No instructor assigned
+MAT111: No instructor assigned
+MAT124: No instructor assigned
 MAT141: Reissig, Dennis
-MAT142: Dart, Bridget
+MAT141: No instructor assigned
+MAT142: No instructor assigned
 MAT142: No instructor assigned
 MAT204: No instructor assigned
-MAT205: Atwood, Alexander
-MAT131: Teason, Lisa
-MAT007: No instructor assigned
+MAT205: No instructor assigned
+MAT131: No instructor assigned
+MAT007: Kim, Myungchul
 MAT107: No instructor assigned
 MAT101: No instructor assigned
-MAT101: Gusack, Russel
+MAT101: No instructor assigned
 MAT103: No instructor assigned
 MAT103: No instructor assigned
 MAT103: No instructor assigned
 MAT104: No instructor assigned
+MAT111: No instructor assigned
 MAT111: Chen, Jerry
-MAT111: Lowey, Robert
-MAT124: Chu, Adrienne
-MAT141: Bonanno, Michael
-MAT203: Teason, Lisa
-MAT001: Kiley, Heidi
-MAT007: Hu, Vera
-MAT007: Kim, Myungchul
-MAT007: Iordan, Michev
-MAT101: Kim, Myungchul
-MAT103: Gusack, Russel
-MAT103: Gusack, Russel
-MAT103: Kiley, Heidi
-MAT111: No instructor assigned
-MAT111: Davidson, Christine
-MAT111: Jerome, Luckner
-MAT111: No instructor assigned
-MAT111: No instructor assigned
-MAT124: Fulton, James
 MAT124: No instructor assigned
-MAT124: No instructor assigned
-MAT101: Coe, Russel
-MAT006: Iordan, Michev
+MAT141: No instructor assigned
+MAT203: No instructor assigned
+MAT001: No instructor assigned
+MAT007: No instructor assigned
 MAT007: No instructor assigned
 MAT007: No instructor assigned
 MAT101: No instructor assigned
-MAT103: Dart, Bridget
 MAT103: No instructor assigned
 MAT103: No instructor assigned
 MAT103: No instructor assigned
-MAT111: Fulton, James
-MAT111: Yen, Yuet
+MAT111: No instructor assigned
+MAT111: No instructor assigned
+MAT111: No instructor assigned
+MAT111: No instructor assigned
+MAT111: No instructor assigned
+MAT124: No instructor assigned
+MAT124: No instructor assigned
+MAT124: No instructor assigned
+MAT101: No instructor assigned
+MAT006: No instructor assigned
+MAT007: No instructor assigned
+MAT007: No instructor assigned
+MAT101: No instructor assigned
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT111: No instructor assigned
+MAT111: No instructor assigned
 MAT112: No instructor assigned
 MAT141: No instructor assigned
 MAT007: No instructor assigned
@@ -115,7 +115,7 @@ MAT101: No instructor assigned
 MAT142: No instructor assigned
 MAT007: No instructor assigned
 MAT007: No instructor assigned
-MAT007: Millings, Rachael
+MAT007: No instructor assigned
 MAT001: No instructor assigned
 MAT001: No instructor assigned
 MAT111: No instructor assigned
@@ -187,25 +187,25 @@ MAT111: No instructor assigned
 MAT111: No instructor assigned
 MAT124: No instructor assigned
 MAT126: No instructor assigned
-MAT131: Buck, Leslie
+MAT131: No instructor assigned
 MAT195: No instructor assigned
-MAT126: Janicka Wlodek, Krystyna
+MAT126: No instructor assigned
 MAT007: No instructor assigned
 MAT007: No instructor assigned
 MAT141: No instructor assigned
-MAT101: Kim, Myungchul
+MAT101: No instructor assigned
 MAT198: No instructor assigned
 MAT195: No instructor assigned
 MAT101: No instructor assigned
-MAT103: Keller, Regina
-MAT103: Hu, Vera
-MAT101: Kim, Myungchul
-MAT103: Buck, Leslie
-MAT007: Chu, Adrienne
-MAT103: Jerome, Luckner
-MAT103: Koukounas, Theodore
-MAT009: Dart, Bridget
-MAT007: Neus, Jordan
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT101: No instructor assigned
+MAT103: No instructor assigned
+MAT007: No instructor assigned
+MAT103: No instructor assigned
+MAT103: No instructor assigned
+MAT009: No instructor assigned
+MAT007: No instructor assigned
 MAT102: No instructor assigned
 MAT009: No instructor assigned
 MAT103: No instructor assigned

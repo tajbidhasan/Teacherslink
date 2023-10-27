@@ -171,7 +171,7 @@ public class ExcelProcessor implements Serializable {
             int rowNum = 1;  // Adding a row counter for debugging
 
             for (Row row : sheet) {
-                System.out.println("Processing row: " + rowNum++);
+               // System.out.println("Processing row: " + rowNum++);
 
                 Cell idCell = row.getCell(0);
                 Cell freqCell = row.getCell(10);
@@ -184,8 +184,8 @@ public class ExcelProcessor implements Serializable {
                     String instructorId = getCellValueAsString(idCell);
                     String courseFrequencyData = getCellValueAsString(freqCell);
 
-                    System.out.println("Instructor ID: " + instructorId);
-                    System.out.println("Frequency Data: " + courseFrequencyData);
+                    //System.out.println("Instructor ID: " + instructorId);
+                   // System.out.println("Frequency Data: " + courseFrequencyData);
 
                     // Check if the instructor ID is valid
                     if (isValidId(instructorId)) {
@@ -195,10 +195,10 @@ public class ExcelProcessor implements Serializable {
                         try {
                             Instructor instructor = db.getInstructor(instructorId);
                             if (instructor != null) {
-                                System.out.println("Found instructor: " + instructor.name);
+                                //System.out.println("Found instructor: " + instructor.getName()); (test)
                                 for (String course : courseFrequency.keySet()) {
                                     int frequency = courseFrequency.get(course);
-                                    System.out.println("Setting frequency for course: " + course + " as: " + frequency);
+                                   // System.out.println("Setting frequency for course: " + course + " as: " + frequency);(test)
                                     instructor.setCourseFrequency(course, frequency);
                                 }
                             } else {
