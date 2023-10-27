@@ -5,12 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+
 
 /**
  * The main application class for TeachersLink.
@@ -39,11 +36,19 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        writeCoursesWithInstructorsToFile("courses_with_instructors.txt");
-        writeInstructorsWithCoursesToFile("instructors_with_courses.txt");
+        String coursesFilename = "courses_with_instructors.xlsx";
+        String instructorsFilename = "instructors_with_courses.xlsx";
+
+        // Call the methods to generate the Excel files
+        ExcelWriter.writeCoursesWithInstructorsToFile(coursesFilename);
+        ExcelWriter.writeInstructorsWithCoursesToFile(instructorsFilename);
 
         StateManager.saveState(InstructorDatabase.getInstance(), "instructor_state.ser");
         StateManager.saveState(CourseDataSet.getInstance(), "course_state.ser");
+
+        System.out.println("Excel files have been generated successfully.");
+
+        System.out.println("Data Saved successfully.");
     }
 
     public static void main(String[] args) throws IOException {
@@ -74,48 +79,5 @@ public class MainApp extends Application {
 
         launch(args);
     }
-    public static void writeCoursesWithInstructorsToFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            for (Course course : CourseDataSet.getInstance().getCourses().values()) {
-                Instructor instructor = course.getInstructor(); // Assuming you have a method like this
-                String line = course.getCourse() + ": " + (instructor != null ? instructor.getName() : "No instructor assigned");
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void writeInstructorsWithCoursesToFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            for (Instructor instructor : InstructorDatabase.getInstance().getAllInstructors()) {
-                List<Course> assignedCourses = instructor.getAssignedCourses();
-
-                StringBuilder coursesInfo = new StringBuilder();
-                for (Course course : assignedCourses) {
-                    String courseDetails = String.format("%s (CRN: %s, Days: %s, Time: %s-%s)",
-                            course.getCourse(),
-                            course.getCrn(),
-                            course.getDays(),
-                            course.getBeginTime(),
-                            course.getEndTime());
-
-                    if (coursesInfo.length() > 0) {
-                        coursesInfo.append(", ");
-                    }
-
-                    coursesInfo.append(courseDetails);
-                }
-
-                String line = instructor.getName() + ": " + (coursesInfo.length() == 0 ? "No courses" : coursesInfo.toString());
-                writer.write(line);
-                writer.newLine();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
