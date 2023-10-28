@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="482.0" prefWidth="650.0" style="-fx-background-image: url('/BgImage.png');                    -fx-background-repeat: no-repeat;                    -fx-background-size: 800 700;                    -fx-background-position: center center;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teacherslink.controller">
+<AnchorPane prefHeight="482.0" prefWidth="650.0" style="-fx-background-image: url('/BgImage.png');                    -fx-background-repeat: no-repeat;                    -fx-background-size: 800 700;                    -fx-background-position: center center;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teacherslink.InstructorController">
    <children>
       <SplitPane fx:id="splitPane1" dividerPositions="0.33" layoutX="51.0" prefHeight="482.0" prefWidth="650.0" styleClass="background-splitpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>

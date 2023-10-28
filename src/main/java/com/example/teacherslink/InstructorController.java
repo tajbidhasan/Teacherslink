@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-public class controller implements Serializable {
+public class InstructorController implements Serializable {
 
     InstructorDatabase db = InstructorDatabase.getInstance();
 
